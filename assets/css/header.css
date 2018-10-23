@@ -1,0 +1,32 @@
+/* INPUT PESQUISA CEP */
+.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-prepend > .input-group-text, .input-group-lg > .input-group-append > .input-group-text, .input-group-lg > .input-group-prepend > .btn, .input-group-lg > .input-group-append > .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.50rem;
+    line-height: 2;
+}
+
+select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.form-control:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
+    height: calc(2.875rem + 18px);
+}
+
+.navbar {
+  padding: 1rem 4rem;
+}
+
+.navbar-nav{
+  margin-right: 50px;
+}
+
+.navbar-nav li {
+  margin-left: 8px;
+  margin-right: 8px;
+
+}
+
+@media screen and (max-width: 768px){
+  .navbar-nav li {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+

@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
+/* MARGINS E PADDINGS CUSTONS */
+
+.mt-40 {
+	margin-top: 40px;
+}
+
+.mt-60 {
+	margin-top: 60px;
+}
+
+.mt-100 {
+	margin-top: 100px;
+}
+
+.mt-200 {
+  margin-top: 200px;
+}
+
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.mb-100{
+  margin-bottom: 100px;
+}
+
+.mtn-100 {
+	margin-top: -100px;
+}
+
+/* Efeitos fadeIn*/
+
+@-webkit-keyframes fadeIn {
+0% { opacity: 0; }
+100% { opacity: 1; } 
+}
+@-moz-keyframes fadeIn {
+0% { opacity: 0;}
+100% { opacity: 1; }
+}
+@-o-keyframes fadeIn {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+@keyframes fadeIn {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+
+.fadeIn {
+-webkit-animation: fadeIn 1s ease-in-out;
+-moz-animation: fadeIn 1s ease-in-out;
+-o-animation: fadeIn 1s ease-in-out;
+animation: fadeIn 1s ease-in-out;
+}
+
+/* Fim */
+
+/* checkbox */
+
+*{font-family: 'Roboto', sans-serif;}
+
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -140px;
+    opacity: 0;
+  }
+}
+
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #fff;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin: 30px 0 20px 20px;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #fff;
+}
+.option-input:checked {
+  background: #28a745;
+}
+.option-input:checked::before {
+  height: 40px;
+  width: 40px;
+
+  content: '✔';
+  display: inline-block;
+  font-size: 26.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #28a745;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+#loader {
+  width: 50px;
+  height: 50px;
+}
+
