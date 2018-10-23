@@ -9,8 +9,8 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'google-site-verification', content="qLHlnawy_EkPlETzJYROs-4d8U9ZVJN9HoCMP8XJbJ8" },
-      { hid: 'description', name: 'description', content: 'Portal Concrelit' }
+      { hid: 'description', name: 'description', content: 'Portal Concrelit' },
+      { hid: 'description', name: 'google-site-verification', content: "qLHlnawy_EkPlETzJYROs-4d8U9ZVJN9HoCMP8XJbJ8" }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

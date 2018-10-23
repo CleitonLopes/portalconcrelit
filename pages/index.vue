@@ -5,6 +5,7 @@ export default {
   name: 'CHome',
   data() {
     return {
+      title: 'Home',
       zipCode: null,
       posts: null,
       depositions: null,
@@ -29,6 +30,16 @@ export default {
       router: null
     };
   },
+
+  // head () {
+  //   return {
+  //     title: this.title,
+  //     meta: [
+       
+  //       // { hid: 'description', name: 'google-site-verification', content: "qLHlnawy_EkPlETzJYROs-4d8U9ZVJN9HoCMP8XJbJ8" }
+  //     ]
+  //   }
+  // },
 
   computed: {
 
