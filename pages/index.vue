@@ -117,18 +117,17 @@ export default {
 
       this.loaderBlog = true
 
+      console.log('teste')
+
       this.$nuxt.$axios.$get(`${this.uri}/${this.router.lastPost}`)
 
       .then(response => {
 
         this.loaderBlog = false
 
-        if (response.status === 200) {
-
-          let data = response.data
-          this.posts = data
-
-        }
+        if (response !== undefined) {
+          this.posts = response
+        }        
 
       })
       .catch(error => {
@@ -169,8 +168,6 @@ export default {
     getBrand () {
 
       this.loaderBrand = true
-
-      console.log('dasdf')
 
       this.$nuxt.$axios.$get(`${this.uri}/${this.router.brand}`)
       .then(response => {
@@ -633,7 +630,7 @@ export default {
 		</div>
 		<div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
 			<div class="card">
-				<img class="card-img-top" src="app/assets/images/concreto-blog.jpg" alt="Card image cap">
+				<img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
 				<div class="card-body">
 					<h5 class="card-title">{{ post.title }}</h5>
 					<p class="card-text"
