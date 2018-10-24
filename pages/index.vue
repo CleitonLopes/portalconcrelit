@@ -1,3 +1,288 @@
+
+<template>
+  <div>
+    <header class="main fadeIn">
+      <div class="title">
+        <div class="blur-overlay"></div>
+        <div class="title-text">
+          <h1>Precisa de Concreto Usinado para sua obra ?</h1>
+          <h3>Receba orçamentos com rapidez.</h3>
+
+          <!-- Busca por Cep -->
+          <div v-show="searchSelected == 'zipCode'" class="row justify-content-center fadeIn">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+              <div class="input-group input-group-lg">
+                <input type="text" class="form-control" maxlength="10" required placeholder="Digite seu CEP"
+                aria-label="DIGITE SEU CEP" aria-describedby="basic-addon3" v-model="prepareZipCode"
+                @keyup.enter="redirectOrder">
+                <div class="input-group-append input-group-append-lg">
+                  <button class="btn btn-primary" @click="redirectOrder()" type="button" :disabled="!validatedButtonSearch">
+                    <i class="fa fa-search fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div id="link-cep" class="change-search">
+                <a class="cep" href="#" @click.stop.prevent="changeSearch('address')">
+                  Não sabe o CEP? Digite seu endereço
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Busca por Rua -->
+          <div v-show="searchSelected == 'address'" class="row justify-content-center fadeIn">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+
+              <div class="form-row">
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-40">
+                  <select class="form-control form-control-lg" v-model="getCityByState" required>
+                    <option v-for="item in jsonState" :value="item.ID">
+
+                      {{ item.Sigla }}
+
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-sm-8 col-md-8 col-lg-8 mt-40">
+                  <select class="form-control form-control-lg" v-model="getSelectCity" required>
+                    <option v-for="item in jsonCities" :value="item.Nome">
+
+                      {{ item.Nome }}
+
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                  <input @keyup.enter="findByAddress()" type="text" class="form-control form-control-lg" v-model="dataAddress.street"
+                  placeholder="Digite seu endereço" required />
+                </div>
+
+                <div class="col-12 col-sm-2 col-md-2 col-lg-2">
+                  <button type="button" class="btn btn-secondary btn-lg btn-block" @click="changeSearch('zipCode')">Voltar</button>
+                </div>
+
+                <div class="col-12 col-sm-10 col-md-10 col-lg-10 mb-40">
+                  <button type="button" class="btn btn-primary btn-lg btn-block"
+                  @click="findByAddress()" :disabled="!validateAddress()">
+                  Buscar
+                </button>
+              </div>
+            </div>
+            <!-- Fim Busca -->
+
+            <!-- Bloco de Endereços encontrados -->
+            <div v-if="responseDataAddress.length > 1" class="table-wrapper-scroll-y">
+              <table class="table table-hover table-light">
+                <thead class="table-secondary">
+                  <tr>
+                    <th scope="col">Logradouro</th>
+                    <th scope="col">Bairro</th>
+                    <th scope="col">Complemento</th>
+                    <th scope="col">Cep</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in responseDataAddress">
+                    <td scope="row">{{ item.logradouro}}</td>
+                    <td>{{ item.bairro }}</td>
+                    <td>{{ item.complemento }}</td>
+                    <td>{{ item.cep }}</td>
+                    <td><a href="#" @click.stop.prevent="selectAddress(item)">Selecionar</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Fim Bloco endereços -->
+
+          </div>
+        </div>
+      </div>
+      </div>
+    </header>
+
+    <!-- Carrossel com Logos -->
+    <div class="container-fluid mt-4" id="brands">
+      <div id="logo" class="carousel slide" data-ride="carousel" data-interval="5000">
+        <div class="carousel-inner row w-100 mx-auto" role="listbox">
+          <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
+            <div class="panel panel-default">
+              <div class="panel-thumbnail">
+                <a :href="brand.redirect" :title="brand.name"
+                  class="thumb" target="_blank">
+                  <img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
+                  :src="brand.path_image" :alt="brand.alt">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
+          <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+        </a>
+        <a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
+          <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <!-- Fim Carrosel com Logos -->
+
+    <!-- Como Funciona -->
+    <section id="como-funciona" class="container como-funciona">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+          <h2 class="titulo">COMO FUNCIONA?</h2>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+          <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
+          <div class="sub-titulo">Localização</div>
+          <p>Insira o cep ou endereço de sua obra. Assim, iremos verificar as concreteiras mais próximas.</p>
+          <p></p>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+          <i class="fa fa-pencil-square fa-3x" aria-hidden="true"></i>
+          <div class="sub-titulo">Solicite</div>
+          <p>Conte-nos qual tipo de concreto e resitência que você precisa e solicite orçamentos.</p>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+          <i class="fa fa-mouse-pointer fa-3x" aria-hidden="true"></i>
+          <div class="sub-titulo">Escolha</div>
+          <p>Receba e avalie e compare os orçamentos que melhor se adequem a sua necessidade.</p>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+          <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+          <div class="sub-titulo">Compre</div>
+          <p>Realize a compra e negocie direto com o fornecedor que você optou.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Fim Bloco como funciona -->
+
+    <!-- Depoimentos -->
+    <section id="depoimentos" class="container-fluid depoimentos">
+      <div class="container">
+        <div v-if="loaderDeposition" class="row">
+          <div class="col-12 text-center mt-4">
+            <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+            <h2 class="titulo">DEPOIMENTOS</h2>
+          </div>
+          <div v-for="(deposition, index) in depositions" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="card text-white bg-primary mb-3 text-center box-card">
+              <div class="card-header">
+                <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+                <span>{{ deposition.title }}</span>
+              </div>
+              <div class="card-body text-left">
+                <div class="card-title">
+                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                </div>
+                <p class="card-text">
+                {{ deposition.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Fim Bloco Depoimentos -->
+
+    <!-- Ultimos Posts -->
+    <section id="blog" class="container">
+      <no-ssr>
+        <div v-if="loaderBlog" class="row">
+          <div class="col-12 text-center mt-4">
+            <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+          </div>
+        </div>
+
+        <div v-else class="row">
+
+          <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+            <h2 class="titulo">BLOG</h2>
+          </div>
+          <div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+            <div class="card">
+              <img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text"
+                  v-html="post.description.substr(0, 250).concat('...')">
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">
+                    Criado em {{ post.date }}
+                  </small>
+                </p>
+                
+                <router-link :to="{ name: 'post', params: { post }}" class="btn btn-primary">
+                  Continuar
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </no-ssr>
+    </section>
+    <!-- Fim Bloco Posts -->
+
+    <!-- Na Midia -->
+    <section id="na-midia" class="container-fluid na-midia">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+            <h2 class="titulo">NA MIDIA</h2>
+          </div>
+
+          <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+            <a href="https://exame.abril.com.br/negocios/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise/" target="_blank">
+              <img src="~assets/images/exame.png" alt="Exame - Concrelit na Midia" title="Exame - Concrelit na Midia" class="img-responsive">
+            </a>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+            <a href="http://www.infomoney.com.br//negocios/noticias-corporativas/noticia/7324898/locacao-equipamentos-torna-uma-oportunidade-tempos-crise" target="_blank">
+              <img src="~assets/images/infomoney.png" alt="InfoMoney - Concrelit na Midia" title="InfoMoney - Concrelit na Midia" class="img-responsive">
+            </a>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+            <a href="https://www.terra.com.br/noticias/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise,c553e374a0919a297db0aff78d6ed026ctmg9eap.html" target="_blank">
+              <img src="~assets/images/terra.png" alt="Terra - Concrelit na Midia" title="Terra - Concrelit na Midia" class="img-responsive">
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+            <a href="http://www.agenciaoglobo.com.br/dinonews/Default.aspx?idnot=41428&tit=Loca%C3%A7%C3%A3o+de+Equipamentos+se+torna+uma+Oportunidade+em+tempos+de+Crise" target="_blank"><img src="~assets/images/oglobo.png" alt="O Globo - Concrelit na Midia" title="O Globo - Concrelit na Midia" class="img-responsive"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Fim midia -->
+
+  </div>
+
+</template>
+
+
 <script>
 
 import axios from 'axios';
@@ -116,13 +401,15 @@ export default {
     return Promise.all([
 
       app.$axios.$get(`${app.uri}/${app.router.lastPost}`),
-      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`)
+      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`),
+      app.$axios.$get(`${app.uri}/${app.router.brand}`)
 
     ])
     .then(results => {
       return {
         posts: results[0],
-        depositions: results[1]
+        depositions: results[1],
+        brands: results[2]
       }
     })
   },
@@ -133,73 +420,6 @@ export default {
 
       this.searchSelected = value
     },
-
-    getBlog () {
-      console.log('teste')
-
-      this.loaderBlog = true
-
-      fetch(`${this.uri}/${this.router.lastPost}`)
-
-      .then(response => response.json())
-
-      .then(data => {
-
-        this.loaderBlog = false
-        this.posts = data            
-
-      })
-      .catch(error => {
-
-        this.loaderBlog = false
-
-      })
-    },
-
-    getDeposition () {
-
-      this.loaderDeposition = true
-
-      fetch(`${this.uri}/${this.router.lastDeposition}`)
-
-      .then(response => response.json())
-
-      .then(data => {
-
-        this.loaderDeposition = false
-        this.depositions = data
-
-      })
-      .catch(error => {
-
-        this.loaderDeposition = false
-
-      })
-
-    },
-
-    getBrand () {
-
-      this.loaderBrand = true
-
-      this.$nuxt.$axios.$get(`${this.uri}/${this.router.brand}`)
-      .then(response => {
-        
-        if (response !== undefined) {
-          this.loaderBrand = false
-          this.brands = response
-        }       
-        
-      })
-
-      .catch(error => {
-
-        this.loaderBrand = false
-
-      })
-
-    },
-
 
     redirectOrder () {
 
@@ -294,7 +514,7 @@ export default {
 
     loadJsonState() {
 
-      fetch('/estados.json')
+      fetch('/json/estados.json')
 
       .then(response => response.json())
 
@@ -318,7 +538,7 @@ export default {
       this.jsonCities = []
       let filtered = []
 
-      fetch('/cidades.json')
+      fetch('/json/cidades.json')
       .then(response => response.json())
       .then(data => {
 
@@ -417,298 +637,17 @@ export default {
     this.getInitial()
     this.loadJsonState()
     this.loadJsonCitiesByState(this.stateSelected)
-    // this.getBlog()
-    // this.getDeposition()
-    this.getBrand()
+
   }
 };
 
 </script>
 
-<template>
-
-<div>
-
-	<header class="main fadeIn">
-		<div class="title">
-			<div class="blur-overlay"></div>
-			<div class="title-text">
-				<h1>Precisa de Concreto Usinado para sua obra ?</h1>
-				<h3>Receba orçamentos com rapidez.</h3>
-
-				<div v-show="searchSelected == 'zipCode'" class="row justify-content-center fadeIn">
-					<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-						<div class="input-group input-group-lg">
-							<input type="text" class="form-control" maxlength="10" required placeholder="Digite seu CEP"
-							aria-label="DIGITE SEU CEP" aria-describedby="basic-addon3" v-model="prepareZipCode"
-							@keyup.enter="redirectOrder">
-							<div class="input-group-append input-group-append-lg">
-								<button class="btn btn-primary" @click="redirectOrder()" type="button" :disabled="!validatedButtonSearch">
-									<i class="fa fa-search fa-lg"></i>
-								</button>
-							</div>
-						</div>
-
-						<div id="link-cep" class="change-search">
-							<a class="cep" href="#" @click.stop.prevent="changeSearch('address')">
-								Não sabe o CEP? Digite seu endereço
-							</a>
-						</div>
-
-					</div>
-				</div>
-				<div v-show="searchSelected == 'address'" class="row justify-content-center fadeIn">
-					<div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-
-						<div class="form-row">
-
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-40">
-								<select class="form-control form-control-lg" v-model="getCityByState" required>
-									<option v-for="item in jsonState" :value="item.ID">
-
-										{{ item.Sigla }}
-
-									</option>
-								</select>
-							</div>
-
-							<div class="col-12 col-sm-8 col-md-8 col-lg-8 mt-40">
-								<select class="form-control form-control-lg" v-model="getSelectCity" required>
-									<option v-for="item in jsonCities" :value="item.Nome">
-
-										{{ item.Nome }}
-
-									</option>
-								</select>
-							</div>
-
-							<div class="col-12 col-sm-12 col-md-12 col-lg-12">
-								<input @keyup.enter="findByAddress()" type="text" class="form-control form-control-lg" v-model="dataAddress.street"
-								placeholder="Digite seu endereço" required />
-							</div>
-
-							<div class="col-12 col-sm-2 col-md-2 col-lg-2">
-								<button type="button" class="btn btn-secondary btn-lg btn-block" @click="changeSearch('zipCode')">Voltar</button>
-							</div>
-
-							<div class="col-12 col-sm-10 col-md-10 col-lg-10 mb-40">
-								<button type="button" class="btn btn-primary btn-lg btn-block"
-								@click="findByAddress()" :disabled="!validateAddress()">
-								Buscar
-							</button>
-						</div>
-
-					</div>
-
-					<div v-if="responseDataAddress.length > 1" class="table-wrapper-scroll-y">
-						<table class="table table-hover table-light">
-							<thead class="table-secondary">
-								<tr>
-									<th scope="col">Logradouro</th>
-									<th scope="col">Bairro</th>
-									<th scope="col">Complemento</th>
-									<th scope="col">Cep</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="item in responseDataAddress">
-									<td scope="row">{{ item.logradouro}}</td>
-									<td>{{ item.bairro }}</td>
-									<td>{{ item.complemento }}</td>
-									<td>{{ item.cep }}</td>
-									<td><a href="#" @click.stop.prevent="selectAddress(item)">Selecionar</a></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	  </div>
-  </header>
-
-  <div class="container-fluid mt-4" id="brands">
-    <div id="logo" class="carousel slide" data-ride="carousel" data-interval="5000">
-      <div class="carousel-inner row w-100 mx-auto" role="listbox">
-        <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
-          <div class="panel panel-default">
-            <div class="panel-thumbnail">
-              <a :href="brand.redirect" :title="brand.name"
-                class="thumb" target="_blank">
-                <img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
-                :src="brand.path_image" :alt="brand.alt">
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
-        <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-      </a>
-      <a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
-        <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-
-
-  <section id="como-funciona" class="container como-funciona">
-    <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-        <h2 class="titulo">COMO FUNCIONA?</h2>
-      </div>
-
-      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-        <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
-        <div class="sub-titulo">Localização</div>
-        <p>Insira o cep ou endereço de sua obra. Assim, iremos verificar as concreteiras mais próximas.</p>
-        <p></p>
-      </div>
-
-      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-        <i class="fa fa-pencil-square fa-3x" aria-hidden="true"></i>
-        <div class="sub-titulo">Solicite</div>
-        <p>Conte-nos qual tipo de concreto e resitência que você precisa e solicite orçamentos.</p>
-      </div>
-
-      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-        <i class="fa fa-mouse-pointer fa-3x" aria-hidden="true"></i>
-        <div class="sub-titulo">Escolha</div>
-        <p>Receba e avalie e compare os orçamentos que melhor se adequem a sua necessidade.</p>
-      </div>
-
-      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-        <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
-        <div class="sub-titulo">Compre</div>
-        <p>Realize a compra e negocie direto com o fornecedor que você optou.</p>
-      </div>
-    </div>
-  </section>
-
-
-  <section id="depoimentos" class="container-fluid depoimentos">
-
-    <div class="container">
-      <div v-if="loaderDeposition" class="row">
-        <div class="col-12 text-center mt-4">
-          <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-          <h2 class="titulo">DEPOIMENTOS</h2>
-        </div>
-        <div v-for="(deposition, index) in depositions" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-          <div class="card text-white bg-primary mb-3 text-center box-card">
-            <div class="card-header">
-              <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
-              <span>{{ deposition.title }}</span>
-            </div>
-            <div class="card-body text-left">
-              <div class="card-title">
-                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-              </div>
-              <p class="card-text">
-              {{ deposition.description }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="blog" class="container">
-
-    <no-ssr>
-      <div v-if="loaderBlog" class="row">
-        <div class="col-12 text-center mt-4">
-          <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-        </div>
-      </div>
-
-      <div v-else class="row">
-
-        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-          <h2 class="titulo">BLOG</h2>
-        </div>
-        <div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
-          <div class="card">
-            <img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text"
-                v-html="post.description.substr(0, 250).concat('...')">
-              </p>
-              <p class="card-text">
-                <small class="text-muted">
-                  Criado em {{ post.date }}
-                </small>
-              </p>
-              
-              <router-link :to="{ name: 'post', params: { post }}" class="btn btn-primary">
-                Continuar
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </no-ssr>
-
-  </section>
-
-  <section id="na-midia" class="container-fluid na-midia">
-
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-          <h2 class="titulo">NA MIDIA</h2>
-        </div>
-
-        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-          <a href="https://exame.abril.com.br/negocios/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise/" target="_blank">
-            <img src="~assets/images/exame.png" alt="Exame - Concrelit na Midia" title="Exame - Concrelit na Midia" class="img-responsive">
-          </a>
-        </div>
-        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-          <a href="http://www.infomoney.com.br//negocios/noticias-corporativas/noticia/7324898/locacao-equipamentos-torna-uma-oportunidade-tempos-crise" target="_blank">
-            <img src="~assets/images/infomoney.png" alt="InfoMoney - Concrelit na Midia" title="InfoMoney - Concrelit na Midia" class="img-responsive">
-          </a>
-        </div>
-        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-          <a href="https://www.terra.com.br/noticias/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise,c553e374a0919a297db0aff78d6ed026ctmg9eap.html" target="_blank">
-            <img src="~assets/images/terra.png" alt="Terra - Concrelit na Midia" title="Terra - Concrelit na Midia" class="img-responsive">
-          </a>
-        </div>
-
-        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-          <a href="http://www.agenciaoglobo.com.br/dinonews/Default.aspx?idnot=41428&tit=Loca%C3%A7%C3%A3o+de+Equipamentos+se+torna+uma+Oportunidade+em+tempos+de+Crise" target="_blank"><img src="~assets/images/oglobo.png" alt="O Globo - Concrelit na Midia" title="O Globo - Concrelit na Midia" class="img-responsive"></a>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-</div>
-
-</template>
-
 <style scoped>
 
 /* HEADER */
-
 header input {
-
   margin-top: 30px;
-
 }
 
 header button {
@@ -780,36 +719,10 @@ header button {
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
-
 /* END HEADER */
 
-/* LOGOS */
-
-.brands {
-  padding: 20px 0 20px 0;
-  align-items: center;
-  min-height: 180px;
-  background: #f0f0f0;
-}
-
-#logo i {
-  background-color: transparent;
-  color: #000;
-}
-
-/* END LOGOS */
 
 /* COMO FUNCIONA */
-.titulo {
-  margin: 30px 0 30px 0;
-  text-align: center;
-  font-size: 36px;
-  color: #333;
-  font-weight: bold;
-  margin-top: 60px;
-
-}
-
 .como-funciona i {
   margin-bottom: 20px;
   color: #ff6501;
@@ -831,9 +744,6 @@ header button {
   margin-left: 30px;
 
 }
-/* END COMO-FUNCIONA */
-
-/* DEPOIMENTOS */
 
 .depoimentos {
   margin-top: 40px;
@@ -857,122 +767,22 @@ header button {
 .depoimentos p {
   font-size: 14px;
   text-align: justify;
-
 }
 
 .box-card {
   height: 100%;
 }
 
-/* END DEPOIMENTOS */
-
-/* BLOG */
-
 .blog h5 {
   font-size: 22px;
   color: #333;
 }
-
-/* END BLOG */
-
-/* NA MIDIA*/
 
 .na-midia {
   margin-top: 50px;
   background-color: #f5f5f5;
   padding: 20px 0 100px 0;
 }
-
-
-/* END MIDIA */
-
-
-/* Carousel */
-
-.carousel-control-next-icon {
-  background-color: #444;
-}
-
-
-@media (min-width: 768px) {
-
-  /* show 3 items */
-  .carousel-inner .active,
-  .carousel-inner .active + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
-      display: block;
-  }
-  
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
-      transition: none;
-  }
-  
-  .carousel-inner .carousel-item-next,
-  .carousel-inner .carousel-item-prev {
-    position: relative;
-    transform: translate3d(0, 0, 0);
-  }
-  
-  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: absolute;
-      top: 0;
-      right: -25%;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-  }
-  
-  /* left or forward direction */
-  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-  .carousel-item-next.carousel-item-left + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(-100%, 0, 0);
-      visibility: visible;
-  }
-  
-  /* farthest right hidden item must be abso position for animations */
-  .carousel-inner .carousel-item-prev.carousel-item-right {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-  }
-  
-  /* right or prev direction */
-  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-  .carousel-item-prev.carousel-item-right + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(100%, 0, 0);
-      visibility: visible;
-      display: block;
-      visibility: visible;
-  }
-
-}
-
-/* Bootstrap Lightbox using Modal */
-
-#profile-grid { overflow: auto; white-space: normal; } 
-#profile-grid .profile { padding-bottom: 40px; }
-#profile-grid .panel { padding: 0 }
-#profile-grid .panel-body { padding: 15px }
-#profile-grid .profile-name { font-weight: bold; }
-#profile-grid .thumbnail {margin-bottom:6px;}
-#profile-grid .panel-thumbnail { overflow: hidden; }
-#profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
-
 </style>
 
 

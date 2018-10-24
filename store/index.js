@@ -88,8 +88,8 @@ const createStore = () => {
         
             dataAddress: null,
         
-            //uri:'http://concretousinadoapi.com.br/api',
-            uri:'https://concretousinado.com.br/api',
+            uri:'http://concretousinadoapi.com.br/api',
+            // uri:'https://concretousinado.com.br/api',
         
             routes: {
                 accessToken: 'access_token',

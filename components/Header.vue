@@ -51,7 +51,7 @@ export default {
 
 </template>
 
-<style>
+<style scoped>
 
 /* INPUT PESQUISA CEP */
 .form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-prepend > .input-group-text, .input-group-lg > .input-group-append > .input-group-text, .input-group-lg > .input-group-prepend > .btn, .input-group-lg > .input-group-append > .btn {

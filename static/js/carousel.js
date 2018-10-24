@@ -1,6 +1,5 @@
 $('#logo').on('slide.bs.carousel', function (e) {
-
-
+    
     var $e = $(e.relatedTarget);
     var idx = $e.index();
     var itemsPerSlide = 4;
@@ -20,22 +19,19 @@ $('#logo').on('slide.bs.carousel', function (e) {
     }
 });
 
-
 $('#logo').carousel({
     interval: 1500
 });
 
-
-  $(document).ready(function() {
+$(document).ready(function() {
     $('a.thumb').click(function(event){
-      event.preventDefault();
-      var content = $('.modal-body');
-      content.empty();
+        event.preventDefault();
+        var content = $('.modal-body');
+        content.empty();
         var title = $(this).attr("title");
         $('.modal-title').html(title);
         content.html($(this).html());
         $(".modal-profile").modal({show:true});
     });
-
-  });
+});
 

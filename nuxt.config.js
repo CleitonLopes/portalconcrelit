@@ -16,60 +16,37 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
     script : [
-      // { src: 'https://code.jquery.com/jquery-3.2.1.slim.min.js' },
-      // { src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' },
-      // { src: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' },
-      { src: 'js/jquery.min.js' },
-      { src: 'js/bootstrap.bundle.min.js' },
-      { src: 'js/carousel.js' }
+      { src: 'js/jquery.min.js', type: "text/javascript" },
+      { src: 'js/carousel.js', type: "text/javscript"},
+      { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" },
     ]
   },
+
   css: [
-    { src: '~/assets/css/style.css' },
-    { src: '~/assets/css/custom.css' },
-    { src: '~/assets/fonts/fontawesome-4.7/css/font-awesome.css' }
+    '~/assets/css/style.css',
+    '~/assets/css/custom.css',
+    '~/assets/fonts/fontawesome-4.7/css/font-awesome.css'
   ],
+
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: '#ff6501' },
+  
+  /* Plugins */
+  plugins: ['~plugins/jquery.js'],
+  
   /*
   ** Build configuration
   */
   build: {
-    /*
-    ** Run ESLint on save
-    */
-    extractCSS:true,    
-
-    // extend (config, { isDev, isClient }) {
-    //   if (isDev && isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // },
-
-    vendor: ['jquery'],
-    plugins: [
-      // set shortcuts as global for bootstrap
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery'
-      })
-    ]
+    extractCSS:true,
   },
 
   modules: [
     '@nuxtjs/axios'
   ],
 
-  axios: {
-
-  }
+  axios: {}
 }
 
