@@ -583,7 +583,7 @@ export default {
       this.responseDataAddress = []
 
       let uriViaCep = this.$store.getters.getUriViaCep
-      
+
       let filter = `${this.dataAddress.stateSelected}/${this.dataAddress.citySelected}/${this.dataAddress.street}/${this.dataAddress.number}`
 
       axios.get(`${uriViaCep}${filter}/json/`)
@@ -595,7 +595,7 @@ export default {
 
             if (response.data.length > 1) {
 
-              this.responseDataAddress = response.body
+              this.responseDataAddress = response.data
 
             } else if(response.data[0] !== undefined) {
 
