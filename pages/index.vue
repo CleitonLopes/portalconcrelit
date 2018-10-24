@@ -1,8 +1,11 @@
 <script>
 
+import axios from 'axios';
+
 export default {
 
   name: 'CHome',
+
   data() {
     return {
       title: 'Home',
@@ -11,7 +14,6 @@ export default {
       depositions: null,
       searchSelected: "zipCode",
       stateSelected: 1000,
-
       dataAddress: {
         stateSelected: null,
         citySelected: "Selecione a cidade",
@@ -106,6 +108,25 @@ export default {
     }
   },
 
+  async asyncData({ app }){
+
+    app.uri = app.store.getters.getUri
+    app.router = app.store.getters.getRoutes
+
+    return Promise.all([
+
+      app.$axios.$get(`${app.uri}/${app.router.lastPost}`),
+      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`)
+
+    ])
+    .then(results => {
+      return {
+        posts: results[0],
+        depositions: results[1]
+      }
+    })
+  },
+
   methods: {
 
     changeSearch (value) {
@@ -114,20 +135,18 @@ export default {
     },
 
     getBlog () {
+      console.log('teste')
 
       this.loaderBlog = true
 
-      console.log('teste')
+      fetch(`${this.uri}/${this.router.lastPost}`)
 
-      this.$nuxt.$axios.$get(`${this.uri}/${this.router.lastPost}`)
+      .then(response => response.json())
 
-      .then(response => {
+      .then(data => {
 
         this.loaderBlog = false
-
-        if (response !== undefined) {
-          this.posts = response
-        }        
+        this.posts = data            
 
       })
       .catch(error => {
@@ -141,20 +160,14 @@ export default {
 
       this.loaderDeposition = true
 
-      this.$nuxt.$axios.get(`${this.uri}/${this.router.lastDeposition}`)
+      fetch(`${this.uri}/${this.router.lastDeposition}`)
 
-      .then(response => {
+      .then(response => response.json())
+
+      .then(data => {
 
         this.loaderDeposition = false
-
-        if (response.status === 200) {
-
-          let data = response.data
-
-          this.depositions = data
-
-        }
-
+        this.depositions = data
 
       })
       .catch(error => {
@@ -329,7 +342,6 @@ export default {
 
       .catch(error => {
 
-        console.log(error)
         alert('Não foi possivel carregas as cidades!')
         
       })
@@ -405,8 +417,8 @@ export default {
     this.getInitial()
     this.loadJsonState()
     this.loadJsonCitiesByState(this.stateSelected)
-    this.getBlog()
-    this.getDeposition()
+    // this.getBlog()
+    // this.getDeposition()
     this.getBrand()
   }
 };
@@ -416,6 +428,7 @@ export default {
 <template>
 
 <div>
+
 	<header class="main fadeIn">
 		<div class="title">
 			<div class="blur-overlay"></div>
@@ -512,177 +525,177 @@ export default {
 				</div>
 			</div>
 		</div>
-	</div>
-</header>
+	  </div>
+  </header>
 
-<div class="container-fluid mt-4" id="brands">
-	<div id="logo" class="carousel slide" data-ride="carousel" data-interval="5000">
-		<div class="carousel-inner row w-100 mx-auto" role="listbox">
-			 <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
-			 	<div class="panel panel-default">
-					<div class="panel-thumbnail">
-						<a :href="brand.redirect" :title="brand.name"
-							class="thumb" target="_blank">
-							<img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
-							:src="brand.path_image" :alt="brand.alt">
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
+  <div class="container-fluid mt-4" id="brands">
+    <div id="logo" class="carousel slide" data-ride="carousel" data-interval="5000">
+      <div class="carousel-inner row w-100 mx-auto" role="listbox">
+        <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
+          <div class="panel panel-default">
+            <div class="panel-thumbnail">
+              <a :href="brand.redirect" :title="brand.name"
+                class="thumb" target="_blank">
+                <img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
+                :src="brand.path_image" :alt="brand.alt">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
-		<a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
-			<i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-		</a>
-		<a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
-			<i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-		</a>
-	</div>
-</div>
-
-
-<section id="como-funciona" class="container como-funciona">
-	<div class="row">
-		<div class="col-12 col-sm-12 col-md-12 col-xl-12">
-			<h2 class="titulo">COMO FUNCIONA?</h2>
-		</div>
-
-		<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-			<i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
-			<div class="sub-titulo">Localização</div>
-			<p>Insira o cep ou endereço de sua obra. Assim, iremos verificar as concreteiras mais próximas.</p>
-			<p></p>
-		</div>
-
-		<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-			<i class="fa fa-pencil-square fa-3x" aria-hidden="true"></i>
-			<div class="sub-titulo">Solicite</div>
-			<p>Conte-nos qual tipo de concreto e resitência que você precisa e solicite orçamentos.</p>
-		</div>
-
-		<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-			<i class="fa fa-mouse-pointer fa-3x" aria-hidden="true"></i>
-			<div class="sub-titulo">Escolha</div>
-			<p>Receba e avalie e compare os orçamentos que melhor se adequem a sua necessidade.</p>
-		</div>
-
-		<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-			<i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
-			<div class="sub-titulo">Compre</div>
-			<p>Realize a compra e negocie direto com o fornecedor que você optou.</p>
-		</div>
-	</div>
-</section>
+      <a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
+        <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+      </a>
+      <a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
+        <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 
 
-<section id="depoimentos" class="container-fluid depoimentos">
+  <section id="como-funciona" class="container como-funciona">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+        <h2 class="titulo">COMO FUNCIONA?</h2>
+      </div>
 
-	<div class="container">
+      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+        <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
+        <div class="sub-titulo">Localização</div>
+        <p>Insira o cep ou endereço de sua obra. Assim, iremos verificar as concreteiras mais próximas.</p>
+        <p></p>
+      </div>
 
-		<div v-if="loaderDeposition" class="row">
-			<div class="col-12 text-center mt-4">
-				<img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-			</div>
-		</div>
+      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+        <i class="fa fa-pencil-square fa-3x" aria-hidden="true"></i>
+        <div class="sub-titulo">Solicite</div>
+        <p>Conte-nos qual tipo de concreto e resitência que você precisa e solicite orçamentos.</p>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+        <i class="fa fa-mouse-pointer fa-3x" aria-hidden="true"></i>
+        <div class="sub-titulo">Escolha</div>
+        <p>Receba e avalie e compare os orçamentos que melhor se adequem a sua necessidade.</p>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
+        <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
+        <div class="sub-titulo">Compre</div>
+        <p>Realize a compra e negocie direto com o fornecedor que você optou.</p>
+      </div>
+    </div>
+  </section>
 
 
-		<div class="row">
-			<div class="col-12 col-sm-12 col-md-12 col-xl-12">
-				<h2 class="titulo">DEPOIMENTOS</h2>
-			</div>
+  <section id="depoimentos" class="container-fluid depoimentos">
 
-			<div v-for="(deposition, index) in depositions" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-				<div class="card text-white bg-primary mb-3 text-center box-card">
-					<div class="card-header">
-						<i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
-						<span>{{ deposition.title }}</span>
-					</div>
-					<div class="card-body text-left">
-						<div class="card-title">
-							<i class="fa fa-star fa-lg" aria-hidden="true"></i>
-							<i class="fa fa-star fa-lg" aria-hidden="true"></i>
-							<i class="fa fa-star fa-lg" aria-hidden="true"></i>
-							<i class="fa fa-star fa-lg" aria-hidden="true"></i>
-							<i class="fa fa-star fa-lg" aria-hidden="true"></i>
-						</div>
-						<p class="card-text">
-						 {{ deposition.description }}
-					 </p>
-				 </div>
-			 </div>
-		 </div>
-	 </div>
- </div>
-</section>
+    <div class="container">
+      <div v-if="loaderDeposition" class="row">
+        <div class="col-12 text-center mt-4">
+          <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+        </div>
+      </div>
 
-<section id="blog" class="container">
 
-	<div v-if="loaderBlog" class="row">
-		<div class="col-12 text-center mt-4">
-			<img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-		</div>
-	</div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+          <h2 class="titulo">DEPOIMENTOS</h2>
+        </div>
+        <div v-for="(deposition, index) in depositions" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="card text-white bg-primary mb-3 text-center box-card">
+            <div class="card-header">
+              <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+              <span>{{ deposition.title }}</span>
+            </div>
+            <div class="card-body text-left">
+              <div class="card-title">
+                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+                <i class="fa fa-star fa-lg" aria-hidden="true"></i>
+              </div>
+              <p class="card-text">
+              {{ deposition.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<div v-else class="row">
+  <section id="blog" class="container">
 
-		<div class="col-12 col-sm-12 col-md-12 col-xl-12">
-			<h2 class="titulo">BLOG</h2>
-		</div>
-		<div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
-			<div class="card">
-				<img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">{{ post.title }}</h5>
-					<p class="card-text"
-						v-html="post.description.substr(0, 250).concat('...')">
-					</p>
-					<p class="card-text">
-						<small class="text-muted">
-							Criado em {{ post.date }}
-						</small>
-					</p>
-					
-					<router-link :to="{ name: 'post', params: { post }}" class="btn btn-primary">
-						Continuar
-					</router-link>
-				</div>
-			</div>
-		</div>
-	</div>
+    <no-ssr>
+      <div v-if="loaderBlog" class="row">
+        <div class="col-12 text-center mt-4">
+          <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+        </div>
+      </div>
 
-</section>
+      <div v-else class="row">
 
-<section id="na-midia" class="container-fluid na-midia">
+        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+          <h2 class="titulo">BLOG</h2>
+        </div>
+        <div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+          <div class="card">
+            <img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text"
+                v-html="post.description.substr(0, 250).concat('...')">
+              </p>
+              <p class="card-text">
+                <small class="text-muted">
+                  Criado em {{ post.date }}
+                </small>
+              </p>
+              
+              <router-link :to="{ name: 'post', params: { post }}" class="btn btn-primary">
+                Continuar
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </no-ssr>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-12 col-sm-12 col-md-12 col-xl-12">
-				<h2 class="titulo">NA MIDIA</h2>
-			</div>
+  </section>
 
-			<div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-				<a href="https://exame.abril.com.br/negocios/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise/" target="_blank">
-					<img src="~assets/images/exame.png" alt="Exame - Concrelit na Midia" title="Exame - Concrelit na Midia" class="img-responsive">
-				</a>
-			</div>
-			<div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-				<a href="http://www.infomoney.com.br//negocios/noticias-corporativas/noticia/7324898/locacao-equipamentos-torna-uma-oportunidade-tempos-crise" target="_blank">
-					<img src="~assets/images/infomoney.png" alt="InfoMoney - Concrelit na Midia" title="InfoMoney - Concrelit na Midia" class="img-responsive">
-				</a>
-			</div>
-			<div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-				<a href="https://www.terra.com.br/noticias/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise,c553e374a0919a297db0aff78d6ed026ctmg9eap.html" target="_blank">
-					<img src="~assets/images/terra.png" alt="Terra - Concrelit na Midia" title="Terra - Concrelit na Midia" class="img-responsive">
-				</a>
-			</div>
+  <section id="na-midia" class="container-fluid na-midia">
 
-			<div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
-				<a href="http://www.agenciaoglobo.com.br/dinonews/Default.aspx?idnot=41428&tit=Loca%C3%A7%C3%A3o+de+Equipamentos+se+torna+uma+Oportunidade+em+tempos+de+Crise" target="_blank"><img src="~assets/images/oglobo.png" alt="O Globo - Concrelit na Midia" title="O Globo - Concrelit na Midia" class="img-responsive"></a>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+          <h2 class="titulo">NA MIDIA</h2>
+        </div>
 
-</section>
+        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+          <a href="https://exame.abril.com.br/negocios/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise/" target="_blank">
+            <img src="~assets/images/exame.png" alt="Exame - Concrelit na Midia" title="Exame - Concrelit na Midia" class="img-responsive">
+          </a>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+          <a href="http://www.infomoney.com.br//negocios/noticias-corporativas/noticia/7324898/locacao-equipamentos-torna-uma-oportunidade-tempos-crise" target="_blank">
+            <img src="~assets/images/infomoney.png" alt="InfoMoney - Concrelit na Midia" title="InfoMoney - Concrelit na Midia" class="img-responsive">
+          </a>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+          <a href="https://www.terra.com.br/noticias/dino/locacao-de-equipamentos-se-torna-uma-oportunidade-em-tempos-de-crise,c553e374a0919a297db0aff78d6ed026ctmg9eap.html" target="_blank">
+            <img src="~assets/images/terra.png" alt="Terra - Concrelit na Midia" title="Terra - Concrelit na Midia" class="img-responsive">
+          </a>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-3 col-xl-3 text-center">
+          <a href="http://www.agenciaoglobo.com.br/dinonews/Default.aspx?idnot=41428&tit=Loca%C3%A7%C3%A3o+de+Equipamentos+se+torna+uma+Oportunidade+em+tempos+de+Crise" target="_blank"><img src="~assets/images/oglobo.png" alt="O Globo - Concrelit na Midia" title="O Globo - Concrelit na Midia" class="img-responsive"></a>
+        </div>
+      </div>
+    </div>
+
+  </section>
 
 </div>
 
