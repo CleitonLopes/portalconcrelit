@@ -43,8 +43,8 @@
 
 						<div class="col-10 mt-3">
 							<div class="texto-plano-exclusivo">Adicionar Logomarca da Concreteira na Página inicial</div>
-							<span v-if="dataPlan !== null" class="valor-plano-exclusivo">
-								R$ {{dataPlan[0]['value_additional']}}/mês
+							<span v-if="data !== null" class="valor-plano-exclusivo">
+								R$ {{data[0]['value_additional']}}/mês
 							</span>
 						</div>
 					</div>
@@ -134,6 +134,12 @@ export default {
     font-size: 16px;
     margin-top: 5px;
     font-weight: bold;
+}
+
+.valor-plano-exclusivo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
 }
 
 .block {

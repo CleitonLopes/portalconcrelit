@@ -2,7 +2,7 @@
     <div>
         <c-modal :params='modal' />
 
-        <section id="newsletter" class="container-fluid newsletter">
+        <section id="newsletter" class="container-fluid newsletter mt-100">
             <div class="container">
                 <div class="row align-items-center">
 

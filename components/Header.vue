@@ -14,7 +14,7 @@ export default {
 <template>    
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-
+    
     <nuxt-link to="/" class="navbar-brand">
         <img src="~assets/images/logo-header.png" alt="" class="d-inline-block align-top">
     </nuxt-link>
@@ -27,6 +27,9 @@ export default {
         <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
             <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
+        </li>
+        <li class="nav-item">
+            <nuxt-link to="/orcamento" class="nav-link">Faça seu Orçamento</nuxt-link>
         </li>
         <li class="nav-item">
             <nuxt-link to="/anuncie" class="nav-link">Anuncios</nuxt-link>
@@ -42,9 +45,7 @@ export default {
         </li>
         </ul>
 
-        <nuxt-link to="/login" class="btn btn-primary my-2 my-sm-0">
-        Entrar
-        </nuxt-link>
+        <nuxt-link to="/login" class="btn btn-primary my-2 my-sm-0">Entrar</nuxt-link>
 
     </div>
 </nav>

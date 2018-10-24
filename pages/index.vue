@@ -457,7 +457,17 @@ export default {
 
       .then(() => {
 
-        this.$router.push('pedido')
+        console.log('teste')
+
+        let paramRoute = `cep=${validated}`
+
+        if (validated.citySelected !== undefined) {          
+
+          paramRoute = `cidade=${validated.citySelected}`
+
+        }
+
+        this.$router.push({ name: 'orcamento-id', params: { id: paramRoute }})
 
       })
 
@@ -572,22 +582,22 @@ export default {
 
       this.responseDataAddress = []
 
-      filter = `${this.dataAddress.stateSelected}/${this.dataAddress.citySelected}/${this.dataAddress.street}/${this.dataAddress.number}`
+      let filter = `${this.dataAddress.stateSelected}/${this.dataAddress.citySelected}/${this.dataAddress.street}/${this.dataAddress.number}`
 
-      this.$http.get(`https://viacep.com.br/ws/${filter}/json/`)
+      axios.get(`https://viacep.com.br/ws/${filter}/json/`)
       .then(response => {
 
-        if (!response.body.erro) {
+        if (!response.data.erro) {
 
-          if (response.body.length > 0) {
+          if (response.data.length > 0) {
 
-            if (response.body.length > 1) {
+            if (response.data.length > 1) {
 
               this.responseDataAddress = response.body
 
-            } else if(response.body[0] !== undefined) {
+            } else if(response.data[0] !== undefined) {
 
-              this.selectAddress(response.body[0])
+              this.selectAddress(response.data[0])
 
             }
 

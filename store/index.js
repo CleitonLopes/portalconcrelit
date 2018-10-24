@@ -88,8 +88,11 @@ const createStore = () => {
         
             dataAddress: null,
         
-            uri:'http://concretousinadoapi.com.br/api',
-            // uri:'https://concretousinado.com.br/api',
+            // uri:'http://concretousinadoapi.com.br/api',
+            uri:'https://concretousinado.com.br/api',
+
+            uriGeocode: 'https://maps.googleapis.com/maps/api/geocode/json?',
+            keyGoogle: 'key=AIzaSyASIpKCFSAc7tsSj2Bj62xMCoHeCqSIBvE',
         
             routes: {
                 accessToken: 'access_token',
@@ -141,6 +144,14 @@ const createStore = () => {
         
             getUri: state => {
                 return state.uri
+            },
+
+            getUriGeocode: state => {
+                return state.uriGeocode
+            },
+
+            getKeyGoogle: state => {
+                return state.keyGoogle
             },
         
             getRoutes: state => {
