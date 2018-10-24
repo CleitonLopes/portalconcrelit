@@ -29,7 +29,7 @@ export default {
             <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
         </li>
         <li class="nav-item">
-            <nuxt-link to="/orcamento" class="nav-link">Faça seu Orçamento</nuxt-link>
+            <nuxt-link to="/orcamento" class="nav-link">Orçamento</nuxt-link>
         </li>
         <li class="nav-item">
             <nuxt-link to="/anuncie" class="nav-link">Anuncios</nuxt-link>

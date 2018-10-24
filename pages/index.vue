@@ -582,9 +582,11 @@ export default {
 
       this.responseDataAddress = []
 
+      let uriViaCep = this.$store.getters.getUriViaCep
+      
       let filter = `${this.dataAddress.stateSelected}/${this.dataAddress.citySelected}/${this.dataAddress.street}/${this.dataAddress.number}`
 
-      axios.get(`https://viacep.com.br/ws/${filter}/json/`)
+      axios.get(`${uriViaCep}${filter}/json/`)
       .then(response => {
 
         if (!response.data.erro) {

@@ -26,30 +26,6 @@
 				</div>
 
 			</div>
-
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-4 align-self-center">
-					<div class="titulo-plano-exclusivo">APROVEITE!</div>
-					<div class="titulo-plano-exclusivo">GARANTA + VISIBILIDADE</div>
-				</div>
-
-				<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mb-4" style="background-color: #ff6501; display: inline-block">
-
-					<div class="row">
-
-						<div class="col-2">
-							<input type="checkbox" class="option-input checkbox" v-model="plan.additional_value"/>
-						</div>
-
-						<div class="col-10 mt-3">
-							<div class="texto-plano-exclusivo">Adicionar Logomarca da Concreteira na Página inicial</div>
-							<span v-if="data !== null" class="valor-plano-exclusivo">
-								R$ {{data[0]['value_additional']}}/mês
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</section>
 </template>

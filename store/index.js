@@ -91,6 +91,7 @@ const createStore = () => {
             // uri:'http://concretousinadoapi.com.br/api',
             uri:'https://concretousinado.com.br/api',
 
+            uriViaCep: 'https://viacep.com.br/ws/',
             uriGeocode: 'https://maps.googleapis.com/maps/api/geocode/json?',
             keyGoogle: 'key=AIzaSyASIpKCFSAc7tsSj2Bj62xMCoHeCqSIBvE',
         
@@ -148,6 +149,10 @@ const createStore = () => {
 
             getUriGeocode: state => {
                 return state.uriGeocode
+            },
+
+            getUriViaCep: state => {
+                return state.uriViaCep
             },
 
             getKeyGoogle: state => {

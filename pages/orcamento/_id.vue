@@ -1,6 +1,7 @@
 <template>
     <section class="container pedido">
         <div class="row">
+            
             <div class="col-12">
                 <h2 class="titulo">Qual o seu Pedido?</h2>
             </div>
@@ -281,8 +282,6 @@ export default {
             let uri = this.$store.getters.getUriGeocode
             let keyGoogle = this.$store.getters.getKeyGoogle
 
-            console.log('keyyyyyyyyyy')
-
             let filter = null
 
             if (filter = this.getFilterGeocode()) {
@@ -492,7 +491,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .pedido {
     margin-top: 100px;
