@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-
-        <c-modal-login :params='modal' />
-
         <div class="row justify-content-md-center text-center mt-200">
             <div class="col col-lg-4">
                 <form class="form-group">
@@ -19,7 +16,7 @@
 
                     <div class="form-group">
                         <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" v-model="password" id="inputPassword" 
+                        <input type="password" v-model="password" id="inputPassword"
                         class="form-control" placeholder="Password" @keyup.enter="authenticate()" required>
                     </div>
 
@@ -58,21 +55,40 @@
                 </form>
             </div>
         </div>
-    </div>    
+
+        <!-- Modal Plano Expirado -->
+        <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-login">{{ modal.title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ modal.message }}
+
+                        <br>
+                        <small><b> {{ modal.info }} </b></small>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="setStorage(responseLogin)">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 
 import axios from 'axios'
-import CModalLogin from '~/components/Modals/ModalLogin.vue'
 
 export default {
 
     name: 'CLogin',
-
-    components : {
-        CModalLogin
-    },
 
     data() {
         return {
@@ -216,7 +232,7 @@ export default {
             })
         }
     }
-    
+
 }
 </script>
 

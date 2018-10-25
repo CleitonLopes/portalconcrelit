@@ -997,15 +997,16 @@ export default {
             this.loader = true;
 
             let data = this.prepareSendPayment()
-            let uri = this.$store.getters.getUri
-            let routes = this.$store.getters.getRoutes
 
             console.log(data)
 
             this.modal.title = null
             this.modal.message = null
 
-            this.$http.post(`${uri}/${routes.newSubscription}`, data)
+            axios.post(`${this.uri}/${this.routes.newSubscription}`, data, {
+
+                headers: { 'Authorization': this.token }
+            })
 
             .then(response => {
 
@@ -1056,13 +1057,12 @@ export default {
 
                 this.loader = true;
 
-                let uri = this.$store.getters.getUri
-                let routes = this.$store.getters.getRoutes
-
                 this.modal.title = null
                 this.modal.message = null
 
-                this.$http.delete(`${uri}/${routes.cancelSubscription}/${subscriptionId}/user/${this.customer.user_id}`)
+                axios.delete(`${this.uri}/${this.routes.cancelSubscription}/${subscriptionId}/user/${this.customer.user_id}`, {
+                    headers: { 'Authorization': this.token }
+                })
 
                 .then(response => {
 
@@ -1086,8 +1086,8 @@ export default {
                 .catch(error => {
                     console.log(error)
                     this.loader = false;
-                    this.modal.title = error.body.title
-                    this.modal.message = error.body.description
+                    this.modal.title = error.response.title
+                    this.modal.message = error.response.description
                     $('#modal').modal()
 
                 })
@@ -1285,6 +1285,104 @@ export default {
 
 .areacliente .texto-plano {
   color: #ff6501;
+}
+
+.anuncie .titulo {
+    margin-top: 140px;
+    color: #ff6501;
+    font-size: 50px;
+}
+
+.anuncie p {
+    margin: -20px 0 40px 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.anuncie .selo {
+    position: absolute;
+    right: -8px;
+    top: -10px;
+    z-index: 1;
+}
+
+.titulo-plano-exclusivo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #444;
+}
+
+.texto-plano-exclusivo {
+    color: #fff;
+    text-align: "justify";
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.valor-plano-exclusivo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.block {
+    border: 1px solid #ccc;
+    height: 280px;
+    min-width: 200px;
+    margin: 10px 0 50px 0;
+    box-shadow: 2px 2px 2px 2px #CCC;
+    text-align: center;
+}
+
+.block .header {
+    text-align: center;
+    padding: 10px 0 10px 0;
+    color: #FFF;
+    background-color: #00aeef;
+    border-bottom: 1px solid #00aeef;
+
+}
+
+.block .header h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.block .content {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.block .content sup {
+
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff6501;
+    top: -20px;
+
+}
+
+.block .content span {
+    font-size: 55px;
+    font-weight: 900;
+    color: #ff6501;
+
+}
+
+.block button {
+    margin-top: 20px;
+}
+
+.block .unit {
+    width: 250px;
+}
+
+.elevated {
+    -webkit-box-shadow: 5px 40px 40px 5px #ccc;
+    -moz-box-shadow: 5px 40px 40px 5px #ccc;
+    box-shadow: 5px 40px 40px 5px #ccc;
 }
 
 </style>
