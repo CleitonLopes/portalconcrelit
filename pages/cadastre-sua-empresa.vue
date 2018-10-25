@@ -1,4 +1,5 @@
 <template>
+
     <div class="container cadastre">
 		<div class="row">
 			<div class="col-12">
@@ -376,6 +377,8 @@
 				</div>
 			</div>
 		</div>
+
+        <c-modal :params='modal' />
 	</div>
 
 </template>
@@ -384,12 +387,14 @@
 
 import axios from 'axios'
 import CModalOrcamento from '~/components/Modals/ModalOrcamento.vue'
+import CModal from '~/components/Modals/Modal.vue'
 
 export default {
     
     name: 'CCadastreSuaEmpresa',
     components: {
-        CModalOrcamento
+        CModalOrcamento,
+        CModal
     },
 
     data () {
@@ -843,21 +848,20 @@ export default {
             .catch(error => {
 
                this.loader = false;
-               let data = [];
+               let response = [];
 
-               data = error.body;
+               response = error.response.data;
 
-
-               if (error.status == '400') {
+               if (response.success == false) {
 
                     this.loader = false;
-                    this.modal.title = data.data.title
-                    this.modal.message = data.data.description
+                    this.modal.title = response.data.title
+                    this.modal.message = response.data.description
                     $('#modal').modal()
 
                } else {
 
-                    if (error.status >= '500') {
+                    if (error.response.status >= 500) {
 
                         this.modal.title = 'Não foi possivel concluir o cadastro!'
                         this.modal.message = 'Há um problema com o método de pagamento, por favor tente novamente!'
@@ -901,14 +905,14 @@ export default {
             params.descriptionButton = 'Acesse'
             params.to = '/login'
             params.classButton = 'btn btn-primary'
-            this.$router.push({name: 'response', params: { params } })
+            this.$router.push({ 
+                name: 'confirmacao-de-compra', 
+                params: params, props: true })
         }
-
     },
 
     mounted () {
 
-        // this.getPlans()
         this.getPlanSelected
     }
 }
