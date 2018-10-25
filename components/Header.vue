@@ -29,16 +29,13 @@ export default {
             <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
         </li>
         <li class="nav-item">
-            <nuxt-link to="/orcamento" class="nav-link">Orçamento</nuxt-link>
-        </li>
-        <li class="nav-item">
             <nuxt-link to="/anuncie" class="nav-link">Anuncios</nuxt-link>
         </li>
         <li class="nav-item">
             <nuxt-link to="/cadastre-sua-empresa" class="nav-link">Cadastre sua Concreteira</nuxt-link>
         </li>
         <li class="nav-item">
-            <nuxt-link to="/blog" class="nav-link">Blog</nuxt-link>
+            <nuxt-link to="/noticias" class="nav-link">Noticias</nuxt-link>
         </li>
         <li class="nav-item">
             <nuxt-link to="/contato" class="nav-link">Contato</nuxt-link>
