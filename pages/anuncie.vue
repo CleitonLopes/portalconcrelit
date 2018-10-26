@@ -27,16 +27,27 @@
 
 			</div>
 		</div>
+
+        <c-newsletter />
+        <c-footer />
 	</section>
 </template>
 
 <script>
 
 import axios from 'axios'
+import CNewsletter from '~/components/Newsletter'
+import CFooter from '~/components/Footer.vue'
 
 export default {
 
     name: 'Anuncios',
+
+    components: {
+        CNewsletter,
+        CFooter
+    },
+
     data () {
 
         return {
