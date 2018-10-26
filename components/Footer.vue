@@ -1,4 +1,4 @@
-<template>    
+<template>
     <footer>
         <div class="container-fluid">
             <div class="container">
@@ -35,7 +35,7 @@
 
                     <div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2 mt-4">
                         <p>Segurança</p>
-                        <a href=""><img src="~assets/images/certificado.jpg" alt="Cartão de Crédito Mastercard" class="certificate"></li></a>
+                        <a href=""><img src="~assets/images/certificate.jpeg" alt="Cartão de Crédito Mastercard" class="certificate"></li></a>
                         <p class="mt-4">Termos</p>
                         <a href="" class="terms-of-use">Termos de uso</a>
                     </div>
@@ -59,7 +59,7 @@
 
 footer {
   position: absolute;
-  width: 100%;  
+  width: 100%;
   padding: 50px 0 50px 0;
   background-color: #3d3d3d;
 }

@@ -8,6 +8,7 @@
           <h1>Precisa de Concreto Usinado para sua obra ?</h1>
           <h3>Receba orçamentos com rapidez.</h3>
 
+
           <!-- Busca por Cep -->
           <div v-show="searchSelected == 'zipCode'" class="row justify-content-center fadeIn">
             <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
@@ -223,7 +224,7 @@
           </div>
           <div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
             <div class="card">
-              <img class="card-img-top" src="~assets/images/concreto-blog.jpg" alt="Card image cap">
+              <img class="card-img-top" :src="post.path_image" alt="Card image cap">
               <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text"
@@ -234,10 +235,10 @@
                     Criado em {{ post.date }}
                   </small>
                 </p>
-                
-                <router-link :to="{ name: 'post', params: { post }}" class="btn btn-primary">
+                <nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
+                  class="btn btn-primary">
                   Continuar
-                </router-link>
+                </nuxt-link>
               </div>
             </div>
           </div>
@@ -278,6 +279,8 @@
     </section>
     <!-- Fim midia -->
 
+    <c-newsletter />
+    <c-footer />
   </div>
 
 </template>
@@ -286,10 +289,17 @@
 <script>
 
 import axios from 'axios';
+import CNewsletter from '~/components/Newsletter'
+import CFooter from '~/components/Footer.vue'
 
 export default {
 
   name: 'CHome',
+
+  components: {
+    CNewsletter,
+    CFooter
+  },
 
   data() {
     return {
@@ -322,7 +332,7 @@ export default {
   //   return {
   //     title: this.title,
   //     meta: [
-       
+
   //       // { hid: 'description', name: 'google-site-verification', content: "qLHlnawy_EkPlETzJYROs-4d8U9ZVJN9HoCMP8XJbJ8" }
   //     ]
   //   }
@@ -457,13 +467,11 @@ export default {
 
       .then(() => {
 
-        console.log('teste')
-
         let paramRoute = `cep=${validated}`
 
-        if (validated.citySelected !== undefined) {          
+        if (validated.citySelected !== undefined) {
 
-          paramRoute = `cidade=${validated.citySelected}`
+          paramRoute = `cidade=${validated.citySelected.replace(/\s+/g, '-')}`
 
         }
 
@@ -573,7 +581,7 @@ export default {
       .catch(error => {
 
         alert('Não foi possivel carregas as cidades!')
-        
+
       })
 
     },
@@ -686,7 +694,7 @@ header button {
   align-items: center;
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 85vh;
 }
 
 .main,
@@ -694,6 +702,108 @@ header button {
   background: url('~assets/images/banner-concrelit.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+
+
+/* Carousel Brands */
+.brands {
+  padding: 20px 0 20px 0;
+  align-items: center;
+  min-height: 180px;
+  background: #f0f0f0;
+}
+
+#logo i {
+  background-color: transparent;
+  color: #000;
+}
+
+/* Carousel */
+
+.carousel-control-next-icon {
+  background-color: #444;
+}
+
+@media (min-width: 768px) {
+
+  /* show 3 items */
+  .carousel-inner .active,
+  .carousel-inner .active + .carousel-item,
+  .carousel-inner .active + .carousel-item + .carousel-item,
+  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
+      display: block;
+  }
+
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+      transition: none;
+  }
+
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: absolute;
+      top: 0;
+      right: -25%;
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+
+  /* left or forward direction */
+  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(-100%, 0, 0);
+      visibility: visible;
+  }
+
+  /* farthest right hidden item must be abso position for animations */
+  .carousel-inner .carousel-item-prev.carousel-item-right {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+
+  /* right or prev direction */
+  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(100%, 0, 0);
+      visibility: visible;
+      display: block;
+      visibility: visible;
+  }
+
+}
+
+/* Bootstrap Lightbox using Modal */
+
+#profile-grid { overflow: auto; white-space: normal; }
+#profile-grid .profile { padding-bottom: 40px; }
+#profile-grid .panel { padding: 0 }
+#profile-grid .panel-body { padding: 15px }
+#profile-grid .profile-name { font-weight: bold; }
+#profile-grid .thumbnail {margin-bottom:6px;}
+#profile-grid .panel-thumbnail { overflow: hidden; }
+#profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
+
+/* Carousel Brands */
+
 
 .title,
 .title-text {
@@ -727,7 +837,7 @@ header button {
 
 .table-wrapper-scroll-y {
   display: block;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }

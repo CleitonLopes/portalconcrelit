@@ -1,162 +1,177 @@
 <template>
-    <section class="container pedido">
-        <div class="row">
-            
-            <div class="col-12">
-                <h2 class="titulo">Qual o seu Pedido?</h2>
-            </div>
+    <section >
+        <div class="container pedido">
 
-            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-lx-6">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="titulo">Qual o seu Pedido?</h2>
+                </div>
 
-                <div class="form-group row">
-                    <label for="zipcode" class="col-12 col-sm-12 col-md-4 col-form-label"><b>CEP DA OBRA:</b></label>
-                    <div class="col-12 col-sm-12 col-md-8">
-                        <div class="input-group">
-                            <input type="text" class="form-control"
-                                placeholder="Digite seu CEP" aria-label="" aria-describedby="basic-addon1"
-                                maxlength="10" required id="zipCode" v-model="prepareZipCode" @keyup.enter="searchCoordinates()">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-primary" type="button" title="Buscar Cep" @click="searchCoordinates()">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </button>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-lx-6">
+
+                    <div class="form-group row">
+                        <label for="zipcode" class="col-12 col-sm-12 col-md-4 col-form-label"><b>CEP DA OBRA:</b></label>
+                        <div class="col-12 col-sm-12 col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control"
+                                    placeholder="Digite seu CEP" aria-label="" aria-describedby="basic-addon1"
+                                    maxlength="10" required id="zipCode" v-model="prepareZipCode" @keyup.enter="searchCoordinates()">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-primary" type="button" title="Buscar Cep" @click="searchCoordinates()">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-12" v-show="loader">
-                    <div class="text-center mt-100 mb-100">
-                        <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-                    </div>
-                </div>
-
-                <div v-show="!loader" id="map-order" class="mb-4 mt-4"></div>
-
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lx-6">
-
-                <p class="text-left">Qual o tipo de concreto que você precisa?</p>
-
-                <form class="form-row mt-4">
-                    <div class="col-12 col-sm-12 col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="concrete-convencional"
-                            :value="'Concreto Convencional'"
-                            v-model="data.typeConcrete" />
-                            <label class="form-check-label" for="concrete-convencional">
-                                Concreto Convencional
-                            </label>
+                    <div class="col-12" v-show="loader">
+                        <div class="text-center mt-100 mb-100">
+                            <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="concrete-bombeado"
-                                :value="'Concreto Bombeado'"
+                    <div v-show="!loader" id="map-order" class="mb-4 mt-4"></div>
+
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-lx-6">
+
+                    <p class="text-left">Qual o tipo de concreto que você precisa?</p>
+
+                    <form class="form-row mt-4">
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="concrete-convencional"
+                                :value="'Concreto Convencional'"
                                 v-model="data.typeConcrete" />
-                            <label class="form-check-label" for="concrete-bombeado">
-                                Concreto Bombeado
-                            </label>
+                                <label class="form-check-label" for="concrete-convencional">
+                                    Concreto Convencional
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12 mt-4">
-                        <p class="text-left">Especificações</p>
-                    </div>
-
-                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						<select v-model="data.resistenceConcreteSelected" class="form-control">
-							<option v-for="item in dataConcreteRes" :value="item.value">
-								{{ item.description }}
-							</option>
-						</select>
-					</div>
-
-                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-						<select v-model="data.pieceConcreteSelected" class="form-control">
-							<option v-for="item in dataPieceConcrete" :value="item.value">
-								{{ item.description }}
-							</option>
-						</select>
-					</div>
-
-
-
-                    <div class="col-12">
-                        <p class="text-left">E a quantidade necessária?</p>
-                    </div>
-
-                    <div class="col-4 col-sm-4 col-md-3">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="8" v-model="data.quantityConcrete">
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="concrete-bombeado"
+                                    :value="'Concreto Bombeado'"
+                                    v-model="data.typeConcrete" />
+                                <label class="form-check-label" for="concrete-bombeado">
+                                    Concreto Bombeado
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-4 col-sm-4 col-md-1">
-                        <label for="metros">m³</label>
-                    </div>
-
-                    <div class="col-4 col-sm-4 col-md-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="quantityconcrete" v-model='data.chkQuantityConcrete'>
-                            <label class="form-check-label" for="quantityconcrete">
-                                Não sei
-                            </label>
+                        <div class="col-12 mt-4">
+                            <p class="text-left">Especificações</p>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <p class="text-left">Deixe seus dados para contato:</p>
-                    </div>
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    						<select v-model="data.resistenceConcreteSelected" class="form-control">
+    							<option v-for="item in dataConcreteRes" :value="item.value">
+    								{{ item.description }}
+    							</option>
+    						</select>
+    					</div>
 
-                    <div class="col-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Nome" v-model="data.name">
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    						<select v-model="data.pieceConcreteSelected" class="form-control">
+    							<option v-for="item in dataPieceConcrete" :value="item.value">
+    								{{ item.description }}
+    							</option>
+    						</select>
+    					</div>
+
+
+
+                        <div class="col-12">
+                            <p class="text-left">E a quantidade necessária?</p>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <div class="form-group">
-                            <input type="text" title="Somente números" 
-                            class="form-control" pattern="[0-9]+" placeholder="Telefone" maxlength="15" v-model="preparePhone">
+                        <div class="col-4 col-sm-4 col-md-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" v-model="data.quantityConcrete">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="E-mail" v-model="data.mail">
+                        <div class="col-4 col-sm-4 col-md-1">
+                            <label for="metros">m³</label>
                         </div>
-                    </div>
 
-                    <div class="col-12">
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Mensagem" v-model="data.message"></textarea>
+                        <div class="col-4 col-sm-4 col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="quantityconcrete" v-model='data.chkQuantityConcrete'>
+                                <label class="form-check-label" for="quantityconcrete">
+                                    Não sei
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-12 text-right">
+                        <div class="col-12">
+                            <p class="text-left">Deixe seus dados para contato:</p>
+                        </div>
 
-                        <router-link to="/"
-                            class="btn btn-secondary btn-lg" type="button">
-                            Voltar
-                        </router-link>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Nome" v-model="data.name">
+                            </div>
+                        </div>
 
-                        <button class="btn btn-success btn-lg" type="submit" :disabled="!validatedOrder || loader" @click.prevent.stop="sendOrder">
-                            Enviar
-                        </button>
-                    </div>
-                </form>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="text" title="Somente números"
+                                class="form-control" pattern="[0-9]+" placeholder="Telefone" maxlength="15" v-model="preparePhone">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="E-mail" v-model="data.mail">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Mensagem" v-model="data.message"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+
+                            <router-link to="/"
+                                class="btn btn-secondary btn-lg" type="button">
+                                Voltar
+                            </router-link>
+
+                            <button class="btn btn-success btn-lg" type="submit" :disabled="!validatedOrder || loader" @click.prevent.stop="sendOrder">
+                                Enviar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </section>    
+
+        <c-newsletter />
+        <c-footer />
+
+    </section>
 </template>
 
 <script>
 
 import axios from 'axios'
+import CNewsletter from '~/components/Newsletter'
+import CFooter from '~/components/Footer.vue'
 
 export default {
+
+    name: 'COrcamento',
+
+    components: {
+        CNewsletter,
+        CFooter
+    },
 
     data () {
 
@@ -192,8 +207,16 @@ export default {
 
             dataPieceConcrete: [
                 { description: 'Qual peça será concretada?', value: '0'},
-                { description: 'Peça A', value: 'A'},
-                { description: 'Peça B', value: 'B'},
+                { description: 'Piso', value: 'Piso'},
+                { description: 'Laje', value: 'Laje'},
+                { description: 'Fundação', value: 'Fundação'},
+                { description: 'Calçada', value: 'Calçada'},
+                { description: 'Guia/Sarjeta', value: 'Guia/Sarjeta'},
+                { description: 'Piscina', value: 'Piscina'},
+                { description: 'Baldrame', value: 'Baldrame'},
+                { description: 'Estaca Hélice', value: 'Estaca Hélice'},
+                { description: 'Radier', value: 'Radier'},
+                { description: 'Outro', value: 'Outro'},
             ],
 
             dataAddress: null,
@@ -240,8 +263,6 @@ export default {
                     this.data.zipCode = value.replace(/\D/g,"")
                     this.data.zipCode = this.data.zipCode.replace(/^(\d{2})(\d)/,"$1.$2")
                     this.data.zipCode = this.data.zipCode.replace(/(\d{3})(\d)/,"$1-$2")
-
-                    return this.zipCode
 
                     this.$store.dispatch('setZipCode', this.data.zipCode)
                 }
@@ -403,7 +424,7 @@ export default {
                 this.redirectViewResponse()
             }, 500)
 
-            this.$http.post(`${uri}/create-order`, data)
+            axios.post(`${uri}/create-order`, data)
 
             .then((response) => {})
 
@@ -411,7 +432,7 @@ export default {
 
         redirectViewResponse() {
 
-            params = {}
+            let params = {}
 
             params.title = 'Pedido realizado com sucesso!'
             params.subTitle = 'Sua solicitação já foi enviada para concreteiras mas perto da sua região. '
@@ -421,9 +442,9 @@ export default {
                 'Bons negócios!'
             ]
             params.descriptionButton = 'Solicitar novo orçamento'
-            params.to = '/pedido'
+            params.to = '/orcamento'
             params.classButton = 'btn btn-success'
-            this.$router.push({name: 'response', params: { params } })
+            this.$router.push({ name: 'confirmacao-de-orcamento', params: params, props: true })
 
         },
 
@@ -487,7 +508,7 @@ export default {
         this.searchCoordinates()
 
     }
-    
+
 }
 </script>
 
@@ -495,22 +516,22 @@ export default {
 
 .pedido {
     margin-top: 100px;
-  }
-  
-  .pedido .titulo {
-      color: #ff6501;
-      font-size: 50px;
-  }
+}
 
-  .pedido p {
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-  }
+.pedido .titulo {
+  color: #ff6501;
+  font-size: 50px;
+}
 
-  #map-order {
-    height: 500px;
-    width: 100%;
+.pedido p {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#map-order {
+height: 500px;
+width: 100%;
   }
 
 </style>

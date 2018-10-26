@@ -1,80 +1,83 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-md-center text-center mt-200">
-            <div class="col col-lg-4">
-                <form class="form-group">
 
-                    <router-link to="/" class="navbar-brand">
-                        <img src="~assets/images/logo-header.png" alt="logo concrelit header" class="d-inline-block align-top">
-                    </router-link>
+    <div>
+        <div class="container">
+            <div class="row justify-content-md-center text-center mt-200">
+                <div class="col col-lg-4">
+                    <form class="form-group">
 
-                    <h1 class="h3 mb-3 font-weight-normal">Identifique-se!</h1>
-                    <div class="form-group">
-                        <label for="inputEmail" class="sr-only">Email</label>
-                        <input type="email" v-model="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus="">
-                    </div>
+                        <router-link to="/" class="navbar-brand">
+                            <img src="~assets/images/logo-header.png" alt="logo concrelit header" class="d-inline-block align-top">
+                        </router-link>
 
-                    <div class="form-group">
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" v-model="password" id="inputPassword"
-                        class="form-control" placeholder="Password" @keyup.enter="authenticate()" required>
-                    </div>
+                        <h1 class="h3 mb-3 font-weight-normal">Identifique-se!</h1>
+                        <div class="form-group">
+                            <label for="inputEmail" class="sr-only">Email</label>
+                            <input type="email" v-model="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus="">
+                        </div>
 
-                    <div class="checkbox mb-3">
-                        <label>
-                        <input type="checkbox" v-model='chk_forgot_password' value="remember-me">
-                            Esqueci minha senha!
-                        </label>
-                    </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" v-model="password" id="inputPassword"
+                            class="form-control" placeholder="Password" @keyup.enter="authenticate()" required>
+                        </div>
 
-                    <div v-show="chk_forgot_password" class="form-group">
-                    <label for="inputForgotEmail"><b>Infome seu email cadastrado!</b></label>
-                        <input type="email" v-model="email_forgot" id="forgot_email" class="form-control mt-2" placeholder="Email de Cadastro">
-                        <small id="emailHelp" class="form-text text-muted">
-                            Atenção, ao tentar recuperar sua senha, informe o email cadastrado em nosso portal que enviaremos para você em
-                            seu email, uma nova senha, assim podendo troca-la a qualquer momento em seu painel!
-                        </small>
-                    </div>
+                        <div class="checkbox mb-3">
+                            <label>
+                            <input type="checkbox" v-model='chk_forgot_password' value="remember-me">
+                                Esqueci minha senha!
+                            </label>
+                        </div>
 
-                    <button v-show="!chk_forgot_password" class="btn btn-lg btn-primary btn-block" type="button" @click="authenticate()">
-                        Entrar
-                    </button>
+                        <div v-show="chk_forgot_password" class="form-group">
+                        <label for="inputForgotEmail"><b>Infome seu email cadastrado!</b></label>
+                            <input type="email" v-model="email_forgot" id="forgot_email" class="form-control mt-2" placeholder="Email de Cadastro">
+                            <small id="emailHelp" class="form-text text-muted">
+                                Atenção, ao tentar recuperar sua senha, informe o email cadastrado em nosso portal que enviaremos para você em
+                                seu email, uma nova senha, assim podendo troca-la a qualquer momento em seu painel!
+                            </small>
+                        </div>
 
-                    <img v-show="loader" id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-
-                    <button v-show="chk_forgot_password" class="btn btn-lg btn-primary btn-block" type="button" @click="forgotPassword()">
-                        Recuper Senha!
-                    </button>
-
-                    <p class="mt-2" v-show="(error !== null || error !== '')" style="color: #ff7675; font-size: 14px;">
-                        {{ error }}
-                    </p>
-
-                    <p class="mt-5 mb-3 text-muted">©2018</p>
-
-                </form>
-            </div>
-        </div>
-
-        <!-- Modal Plano Expirado -->
-        <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-login">{{ modal.title }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button v-show="!chk_forgot_password" class="btn btn-lg btn-primary btn-block" type="button" @click="authenticate()">
+                            Entrar
                         </button>
-                    </div>
-                    <div class="modal-body">
-                        {{ modal.message }}
 
-                        <br>
-                        <small><b> {{ modal.info }} </b></small>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="setStorage(responseLogin)">OK</button>
+                        <img v-show="loader" id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+
+                        <button v-show="chk_forgot_password" class="btn btn-lg btn-primary btn-block" type="button" @click="forgotPassword()">
+                            Recuper Senha!
+                        </button>
+
+                        <p class="mt-2" v-show="(error !== null || error !== '')" style="color: #ff7675; font-size: 14px;">
+                            {{ error }}
+                        </p>
+
+                        <p class="mt-5 mb-3 text-muted">©2018</p>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Plano Expirado -->
+            <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-login">{{ modal.title }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ modal.message }}
+
+                            <br>
+                            <small><b> {{ modal.info }} </b></small>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="setStorage(responseLogin)">OK</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,10 +88,15 @@
 <script>
 
 import axios from 'axios'
+import CFooter from '~/components/Footer.vue'
 
 export default {
 
     name: 'CLogin',
+
+    components: {
+        CFooter
+    },
 
     data() {
         return {

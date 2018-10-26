@@ -112,7 +112,8 @@ const createStore = () => {
                 brand: 'brand',
                 lastPost: 'last-post',
                 lastDeposition: 'last-deposition',
-                blog: 'post'
+                blog: 'post',
+                postTag: 'post-tag'
             },
 
             storage: null,

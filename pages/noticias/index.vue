@@ -1,8 +1,8 @@
 <template>
-	<section v-if="post != ''" id="blog">
-		<div class="container blog">
+	<section>
+		<div id="blog" class="container blog">
 
-			<div class="row">
+			<div v-if="data" class="row">
 
 				<div class="col-12">
 					<h2 class="titulo">Blog</h2>
@@ -14,7 +14,7 @@
 					</div>
 				</div>
 
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div v-for="post in data.data" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
 					<h5 class="text-center">{{ post.title }}</h5>
 
@@ -23,23 +23,39 @@
 					</div>
 
 					<div class="mt-4"
-						v-html="post.description">
+						v-html="post.description.substr(0, 600).concat('...')">
 					</div>
 
-					<nuxt-link to="/noticias"
+					<nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
 						class="btn btn-primary">
-						voltar
+						Continuar
 					</nuxt-link>
 
 				</div>
 			</div>
 
+			<div class="row mt-4">
+
+				<div class="col-12">
+					<button v-if="data.prev_page_url" type="button" class="btn btn-secondary mb-2"
+						@click="getNextOrPrev(data.prev_page_url)">
+						<i class="fa fa-angle-double-left" aria-hidden="true"></i>
+						Publicações Recentes
+					</button>
+
+					<button v-show="data.next_page_url" type="button" class="btn btn-secondary mb-2"
+						@click="getNextOrPrev(data.next_page_url)">
+						Publicações Anteriores
+						<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+					</button>
+				</div>
+
+			</div>
 		</div>
 
 		<c-newsletter />
    	<c-footer />
 	</section>
-
 </template>
 
 <script>
@@ -48,10 +64,9 @@ import axios from 'axios'
 import CNewsletter from '~/components/Newsletter'
 import CFooter from '~/components/Footer.vue'
 
-
 export default {
 
-    name: 'CPost',
+    name: 'CNoticias',
 
   	components: {
 	    CNewsletter,
@@ -62,23 +77,29 @@ export default {
 
         return {
 
-        	post: '',
             loader: false,
             uri: null,
             router: null
         }
 	},
 
+	async asyncData({ app }) {
+
+		app.uri = app.store.getters.getUri
+        app.router = app.store.getters.getRoutes
+
+		let data = await app.$axios.$get(`${app.uri}/${app.router.blog}`)
+		return { data }
+
+	},
+
     methods: {
 
-        getPostByTag(tag) {
-
-        	const uri = this.$store.getters.getUri
-        	const router = this.$store.getters.getRoutes
+        getNextOrPrev(uri) {
 
             this.loader = true
 
-            axios.get(`${uri}/${router.postTag}/${tag}`)
+            axios.get(uri)
 
             .then(response => {
 
@@ -86,7 +107,7 @@ export default {
 
                 if (response.status === 200) {
 
-                    this.post = response.data
+                    this.data = response.data
 
                 }
             })
@@ -96,11 +117,6 @@ export default {
 
         }
     },
-
-    mounted () {
-    	console.log(this.$route.params)
-    	this.getPostByTag(this.$route.params.id)
-    }
 }
 </script>
 

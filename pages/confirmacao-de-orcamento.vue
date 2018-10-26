@@ -16,17 +16,6 @@
 
 				</div>
 
-				<!-- Opções Boleto Bancário -->
-				<div v-if="params.ticket !== undefined || params.ticket !== null">
-
-					<div class="description" v-for="(item, index) in params.ticket ">
-						<p v-if="index == 2">
-							{{ item.name }}: <a href="#" @click="copy(this)">{{ item.description }}</a>
-						</p>
-						<a v-else :href="item.description" target="_blank">{{ item.name }}</a>
-					</div>
-				</div>
-
 			 	<router-link v-if="params.descriptionButton !== null"
 			 		:to="params.to" :class="params.classButton">
 		 			{{ params.descriptionButton }}
@@ -41,7 +30,7 @@
 <script>
 export default {
 
-    name: 'CConfirmacaoCompra',
+    name: 'CConfirmacaoOrcamento',
 
     data () {
 
@@ -63,10 +52,10 @@ export default {
 
 	mounted() {
 
-        this.params = this.$route.params
+    this.params = this.$route.params
 
 		if ( this.params == null || this.params == undefined) {
-			this.$router.push('/');
+			this.$router.push('/orcamento');
 		}
 	}
 }

@@ -32,7 +32,7 @@
 
 		<div class="row">
 
-            <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+            <div class="col-12 col-sm-12 col-md-2 col-lg-2 mt-4">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="v-pills-dados-geral-tab"
                         data-toggle="pill" href="#v-pills-dados-geral" role="tab"
@@ -63,7 +63,7 @@
             </div>
 
 
-            <div class="col-12  col-sm-12 col-md-10 col-lg-10">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-10">
 
 
                 <div class="tab-content" id="v-pills-tabContent">
@@ -551,6 +551,7 @@
     </div>
 
     <c-modal :params='modal' />
+    <c-modal-order :params='modalOrder' />
 </div>
 
 </template>
@@ -660,7 +661,14 @@ export default {
                 message: null
             },
 
-            modalOrder: null,
+            modalOrder: {
+                type_concrete: null,
+                resistence_concrete_selected: null,
+                piece_concrete_selected: null,
+                quantity_concrete: null,
+                message: null
+            },
+
             storage: null,
             showSignature: false,
             financials: null,
@@ -918,6 +926,8 @@ export default {
 
         getOrders() {
 
+            console.log(this.customer)
+
             if (this.customer.id !== null) {
 
                 axios.get(`${this.uri}/${this.routes.notification}/${this.customer.id}`, {
@@ -943,14 +953,11 @@ export default {
 
         orderDetail(order) {
 
-            this.modalOrder = {
-
-                "type_concrete": order.type_concrete,
-                "resistence_concrete_selected": order.resistence_concrete_selected,
-                "piece_concrete_selected": order.piece_concrete_selected,
-                "quantity_concrete": order.quantity_concrete,
-                "message": order.message
-            }
+            this.modalOrder.type_concrete = order.type_concrete
+            this.modalOrder.resistence_concrete_selected = order.resistence_concrete_selected
+            this.modalOrder.piece_concrete_selected = order.piece_concrete_selected
+            this.modalOrder.quantity_concrete = order.quantity_concrete
+            this.modalOrder.message = order.message
 
             $('#modal_order').modal()
 

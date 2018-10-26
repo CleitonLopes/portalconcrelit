@@ -1,26 +1,24 @@
 <template>
     <div>
-        <c-modal :params='modal' />
-
         <section id="newsletter" class="container-fluid newsletter mt-100">
-            <div class="container">
-                <div class="row align-items-center">
+                <div class="container">
+                    <div class="row align-items-center">
 
-                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 text-center mt-4">
-                        <i class="fa fa-envelope-o fa-3x"></i>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <h2 class="titulo-newsletter">Quer receber as melhores dicas para sua obra?</h2>
-                        <p>Deixe e-mail que iremos enviar dicas, informações e novidades!</p>
-                    </div>
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 text-center mt-4">
+                            <i class="fa fa-envelope-o fa-3x"></i>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <h2 class="titulo-newsletter">Quer receber as melhores dicas para sua obra?</h2>
+                            <p>Deixe e-mail que iremos enviar dicas, informações e novidades!</p>
+                        </div>
 
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group input-group-md">
-                            <input type="text" class="form-control" placeholder="exemplo@concretousinado.com.br" v-model="email"
-                            aria-describedby="basic-addon3">
-                            <div class="input-group-append input-group-append-md">
-                                <button class="btn btn-primary" type="button"
-                                @click="subscription()" :disabled="!validated">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="input-group input-group-md">
+                                <input type="text" class="form-control" placeholder="exemplo@concretousinado.com.br" v-model="email"
+                                aria-describedby="basic-addon3">
+                                <div class="input-group-append input-group-append-md">
+                                    <button class="btn btn-primary" type="button"
+                                    @click="subscription()" :disabled="!validated">
                                     <i class="fa fa-paper-plane fa-lg"></i>
                                 </button>
                                 <img v-show="loader" id="loader" src="~assets/images/loader.gif" alt="loader pagina">
@@ -28,11 +26,12 @@
                         </div>
                     </div>
                 </div>
-		    </div>
-	    </section>
-    </div>    
-</template>
+            </div>
+        </section>
 
+         <c-modal :params='modal' />
+    </div>
+</template>
 <script>
 
 import axios from 'axios'
@@ -41,7 +40,7 @@ import CModal from '~/components/Modals/Modal.vue'
 export default {
 
     data () {
-        
+
 		return {
 
 			email: null,
@@ -52,7 +51,7 @@ export default {
             }
 		}
     },
-    
+
     components: {
         CModal
     },

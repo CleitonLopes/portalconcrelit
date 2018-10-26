@@ -11,41 +11,44 @@ export default {
 </script>
 
 
-<template>    
+<template>
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-    
-    <nuxt-link to="/" class="navbar-brand">
-        <img src="~assets/images/logo-header.png" alt="" class="d-inline-block align-top">
-    </nuxt-link>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <nuxt-link to="/" class="navbar-brand">
+            <img src="~assets/images/logo-header.png" alt="" class="d-inline-block align-top">
+        </nuxt-link>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-            <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
-        </li>
-        <li class="nav-item">
-            <nuxt-link to="/anuncie" class="nav-link">Anuncios</nuxt-link>
-        </li>
-        <li class="nav-item">
-            <nuxt-link to="/cadastre-sua-empresa" class="nav-link">Cadastre sua Concreteira</nuxt-link>
-        </li>
-        <li class="nav-item">
-            <nuxt-link to="/noticias" class="nav-link">Noticias</nuxt-link>
-        </li>
-        <li class="nav-item">
-            <nuxt-link to="/contato" class="nav-link">Contato</nuxt-link>
-        </li>
-        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <nuxt-link to="/login" class="btn btn-primary my-2 my-sm-0">Entrar</nuxt-link>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/sobre" class="nav-link">Sobre</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/anuncie" class="nav-link">Anuncios</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/cadastre-sua-empresa" class="nav-link">Cadastre sua Concreteira</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/noticias" class="nav-link">Noticias</nuxt-link>
+            </li>
+            <li class="nav-item">
+                <nuxt-link to="/contato" class="nav-link">Contato</nuxt-link>
+            </li>
+            </ul>
 
-    </div>
-</nav>
+            <nuxt-link to="/login" class="btn btn-primary my-2 my-sm-0">Entrar</nuxt-link>
+
+        </div>
+    </nav>
 
 </template>
 

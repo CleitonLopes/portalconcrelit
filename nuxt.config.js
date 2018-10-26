@@ -18,7 +18,7 @@ module.exports = {
     script : [
       { src: 'js/jquery.min.js', type: "text/javascript" },
       { src: 'js/carousel.js', type: "text/javscript"},
-      { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" },
+      { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" }
     ]
   },
 
@@ -32,10 +32,10 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: '#ff6501' },
-  
+
   /* Plugins */
   plugins: ['~plugins/jquery.js'],
-  
+
   /*
   ** Build configuration
   */
