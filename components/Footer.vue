@@ -58,7 +58,7 @@
 <style scoped>
 
 footer {
-  position: absolute;
+/*  position: absolute;*/
   width: 100%;
   padding: 50px 0 50px 0;
   background-color: #3d3d3d;
