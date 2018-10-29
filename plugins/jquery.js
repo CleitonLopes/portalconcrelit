@@ -1,5 +1,11 @@
 
-if (process.BROWSER_BUILD) {
-    const $ = require('jquery')
-    $(function() {})
+if (process.browser) {
+
+	console.log('teste')
+	global.jQuery = require('jquery');
+	var $ = global.jQuery;
+	window.$ = $;
+
+  console.log(window.$)
+
  }

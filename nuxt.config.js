@@ -17,8 +17,8 @@ module.exports = {
     ],
     script : [
       { src: 'js/jquery.min.js', type: "text/javascript" },
-      { src: 'js/carousel.js', type: "text/javscript"},
-      { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" }
+      { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" },
+      { src: 'js/carousel.js', type: "text/javascript"}
     ]
   },
 
@@ -33,14 +33,12 @@ module.exports = {
   */
   loading: { color: '#ff6501' },
 
-  /* Plugins */
-  plugins: ['~plugins/jquery.js'],
+  // /* Plugins */
+  plugins: ['~/plugins/jquery.js'],
 
-  /*
-  ** Build configuration
-  */
   build: {
-    extractCSS:true,
+    vendor: ['jquery'],
+    extractCSS:true
   },
 
   modules: [

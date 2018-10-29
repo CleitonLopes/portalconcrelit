@@ -100,7 +100,6 @@
               </table>
             </div>
             <!-- Fim Bloco endereços -->
-
           </div>
         </div>
       </div>
@@ -108,31 +107,7 @@
     </header>
 
     <!-- Carrossel com Logos -->
-    <div class="container-fluid mt-4" id="brands">
-      <div id="logo" class="carousel slide" data-ride="carousel" data-interval="5000">
-        <div class="carousel-inner row w-100 mx-auto" role="listbox">
-          <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
-            <div class="panel panel-default">
-              <div class="panel-thumbnail">
-                <a :href="brand.redirect" :title="brand.name"
-                  class="thumb" target="_blank">
-                  <img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
-                  :src="brand.path_image" :alt="brand.alt">
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
-          <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-        </a>
-        <a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
-          <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-    <!-- Fim Carrosel com Logos -->
+    <c-brand />
 
     <!-- Como Funciona -->
     <section id="como-funciona" class="container como-funciona">
@@ -291,6 +266,7 @@
 import axios from 'axios';
 import CNewsletter from '~/components/Newsletter'
 import CFooter from '~/components/Footer.vue'
+import CBrand from '~/components/Brand.vue'
 
 export default {
 
@@ -298,7 +274,8 @@ export default {
 
   components: {
     CNewsletter,
-    CFooter
+    CFooter,
+    CBrand
   },
 
   data() {
@@ -319,10 +296,8 @@ export default {
       responseDataAddress: [],
       jsonState: [],
       jsonCities: [],
-      brands: [],
       loaderBlog: false,
       loaderDeposition: false,
-      loaderBrand: false,
       uri: null,
       router: null
     };
@@ -411,15 +386,13 @@ export default {
     return Promise.all([
 
       app.$axios.$get(`${app.uri}/${app.router.lastPost}`),
-      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`),
-      app.$axios.$get(`${app.uri}/${app.router.brand}`)
+      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`)
 
     ])
     .then(results => {
       return {
         posts: results[0],
-        depositions: results[1],
-        brands: results[2]
+        depositions: results[1]
       }
     })
   },
@@ -427,7 +400,6 @@ export default {
   methods: {
 
     changeSearch (value) {
-
       this.searchSelected = value
     },
 
@@ -446,8 +418,10 @@ export default {
           event = 'setZipCode'
 
         } else {
+
           alert('Preencha os campos corretamente!')
           return false
+
         }
 
       } else {
@@ -457,8 +431,10 @@ export default {
           event = 'setDataAddress'
 
         } else {
+
           alert('Preencha os campos corretamente!')
           return false
+
         }
 
       }
@@ -492,6 +468,7 @@ export default {
       }
 
       return false
+
     },
 
     validateAddress () {
@@ -666,12 +643,28 @@ export default {
 <style scoped>
 
 /* HEADER */
+header {
+  margin-top: 40px;
+}
+
 header input {
   margin-top: 30px;
 }
 
 header button {
   margin-top: 30px;
+}
+/* Fim header */
+
+/*Pesquisa CEP */
+.form-control-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-prepend > .input-group-text, .input-group-lg > .input-group-append > .input-group-text, .input-group-lg > .input-group-prepend > .btn, .input-group-lg > .input-group-append > .btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.50rem;
+    line-height: 2;
+}
+
+select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.form-control:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
+    height: calc(2.875rem + 18px);
 }
 
 .change-search {
@@ -689,12 +682,13 @@ header button {
   color: #FFF;
   opacity: 0.8;
 }
+/* Fim CEP */
 
 .main {
   align-items: center;
   display: flex;
   justify-content: center;
-  min-height: 85vh;
+  min-height: 80vh;
 }
 
 .main,
@@ -702,108 +696,6 @@ header button {
   background: url('~assets/images/banner-concrelit.jpg') no-repeat center center fixed;
   background-size: cover;
 }
-
-
-/* Carousel Brands */
-.brands {
-  padding: 20px 0 20px 0;
-  align-items: center;
-  min-height: 180px;
-  background: #f0f0f0;
-}
-
-#logo i {
-  background-color: transparent;
-  color: #000;
-}
-
-/* Carousel */
-
-.carousel-control-next-icon {
-  background-color: #444;
-}
-
-@media (min-width: 768px) {
-
-  /* show 3 items */
-  .carousel-inner .active,
-  .carousel-inner .active + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item,
-  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
-      display: block;
-  }
-
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
-      transition: none;
-  }
-
-  .carousel-inner .carousel-item-next,
-  .carousel-inner .carousel-item-prev {
-    position: relative;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: absolute;
-      top: 0;
-      right: -25%;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-  }
-
-  /* left or forward direction */
-  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
-  .carousel-item-next.carousel-item-left + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(-100%, 0, 0);
-      visibility: visible;
-  }
-
-  /* farthest right hidden item must be abso position for animations */
-  .carousel-inner .carousel-item-prev.carousel-item-right {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      display: block;
-      visibility: visible;
-  }
-
-  /* right or prev direction */
-  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-  .carousel-item-prev.carousel-item-right + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
-  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-      position: relative;
-      transform: translate3d(100%, 0, 0);
-      visibility: visible;
-      display: block;
-      visibility: visible;
-  }
-
-}
-
-/* Bootstrap Lightbox using Modal */
-
-#profile-grid { overflow: auto; white-space: normal; }
-#profile-grid .profile { padding-bottom: 40px; }
-#profile-grid .panel { padding: 0 }
-#profile-grid .panel-body { padding: 15px }
-#profile-grid .profile-name { font-weight: bold; }
-#profile-grid .thumbnail {margin-bottom:6px;}
-#profile-grid .panel-thumbnail { overflow: hidden; }
-#profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
-
-/* Carousel Brands */
-
 
 .title,
 .title-text {
@@ -841,7 +733,7 @@ header button {
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
-/* END HEADER */
+/* Fim Header */
 
 
 /* COMO FUNCIONA */

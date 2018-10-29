@@ -1,8 +1,9 @@
+
 // $('#logo').on('slide.bs.carousel', function (e) {
 
 //     var $e = $(e.relatedTarget);
 //     var idx = $e.index();
-//     var itemsPerSlide = 5;
+//     var itemsPerSlide = 4;
 //     var totalItems = $('.carousel-item').length;
 
 //     if (idx >= totalItems-(itemsPerSlide-1)) {
@@ -20,7 +21,7 @@
 // });
 
 // $('#logo').carousel({
-//     interval: 1500
+//     interval: 2000
 // });
 
 // $(document).ready(function() {
@@ -35,7 +36,4 @@
 //     });
 // });
 
-// $('#blogCarousel').carousel({
-//         interval: 1000
-// });
 
