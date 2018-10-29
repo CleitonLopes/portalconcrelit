@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="footer">
         <div class="container">
             <div class="row justify-content-md-center text-center mt-200">
                 <div class="col col-lg-4">
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <footer>
+        <footer class="mt-100">
             <div class="container-fluid">
                 <div class="container">
                     <div class="row">
@@ -299,14 +299,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 footer {
-/*  position: absolute;*/
+  /*position: absolute;*/
+  clear: both;
   width: 100%;
   padding: 50px 0 50px 0;
   background-color: #3d3d3d;
-  bottom: 0;
+  bottom: 0px;
 }
 
 footer p {
@@ -353,6 +354,12 @@ footer a:hover {
   color: #FFF;
   opacity: 0.8;
 }
+
+
+.content {overflow:hidden;}
+.aside {width:200px;}
+.fleft {float:left;}
+.fright {float:right;}
 
 </style>
 
