@@ -98,15 +98,14 @@
 
 </script>
 
-<style>
+<style scoped>
+
  .carousel-indicators {
   left: 0;
   top: auto;
   bottom: -40px;
-
 }
 
-/* The colour of the indicators */
 .carousel-indicators li {
     background: #ff6501;
     border-radius: 50%;
@@ -117,6 +116,5 @@
 .carousel-indicators .active {
   background: #ff6501;
 }
-
 
 </style>
