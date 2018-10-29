@@ -16,6 +16,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
     script : [
+      { src: 'https://code.jquery.com/jquery-3.3.1.min.js', type: 'text/javascript'},
       { src: 'js/jquery.min.js', type: "text/javascript" },
       { src: 'js/bootstrap.bundle.min.js', type: "text/javascript" },
       { src: 'js/carousel.js', type: "text/javascript"}
@@ -34,10 +35,10 @@ module.exports = {
   loading: { color: '#ff6501' },
 
   // /* Plugins */
-  plugins: ['~/plugins/jquery.js'],
+  //plugins: ['~/plugins/jquery.js'],
 
   build: {
-    vendor: ['jquery'],
+    //vendor: ['jquery'],
     extractCSS:true
   },
 

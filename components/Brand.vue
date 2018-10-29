@@ -1,105 +1,52 @@
 <template>
-	 <!-- <div class="container-fluid mt-4" id="brands">
+  <div>
+    <div v-if="loaderBrand" class="row">
+      <div class="col-12 text-center mt-2">
+        <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
+      </div>
+    </div>
 
-      <div id="logo" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner row w-100 mx-auto" role="listbox">
-          <div v-for="(brand, index) in brands" class="carousel-item col-md-3" :class="{ active: index == 0}">
-            <div class="panel panel-default">
-              <div class="panel-thumbnail">
-                <a :href="brand.redirect" :title="brand.name"
+    <div v-else class="container-fluid mt-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="brandCarousel" class="carousel slide" data-ride="carousel" data-interval="2500">
+
+            <ol class="carousel-indicators">
+              <li data-target="#brandCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#brandCarousel" data-slide-to="1"></li>
+            </ol>
+
+            <div class="carousel-inner">
+              <div class="carousel-item active text-center">
+                <div class="row">
+                  <div class="col-12 col-md-2" v-for="(brand, index) in brands">
+                    <a :href="brand.redirect" :title="brand.name"
+                    class="thumb" target="_blank">
+                    <img style="max-width:100px; height: 100px;"
+                    :src="brand.path_image" :alt="brand.alt">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item text-center">
+              <div class="row">
+                <div class="col-12 col-md-2" v-for="(brand, index) in brands">
+                  <a :href="brand.redirect" :title="brand.name"
                   class="thumb" target="_blank">
-                  <img style="width:100px; height: 100px;" class="img-fluid mx-auto d-block"
+                  <img style="max-width:100px; height: 100px;"
                   :src="brand.path_image" :alt="brand.alt">
                 </a>
               </div>
             </div>
           </div>
+
         </div>
-
-        <a class="carousel-control-prev" href="#logo" role="button" data-slide="prev">
-          <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-        </a>
-        <a class="carousel-control-next text-faded" href="#logo" role="button" data-slide="next">
-          <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-        </a>
       </div>
-  </div> -->
-  <div class="container-fluid mt-2">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="brandCarousel" class="carousel slide" data-ride="carousel">
-
-                        <ol class="carousel-indicators">
-                            <li data-target="#brandCarousel" data-slide-to="0" class="active"></li>
-                            <!-- <li data-target="#brandCarousel" data-slide-to="1"></li> -->
-                        </ol>
-
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active text-center">
-                                <div class="row">
-                                    <div class="col-12 col-md-2" v-for="(brand, index) in brands">
-                                      <a :href="brand.redirect" :title="brand.name"
-                                        class="thumb" target="_blank">
-                                        <img style="max-width:100px; height: 100px;"
-                                        :src="brand.path_image" :alt="brand.alt">
-                                      </a>
-                                    </div>
-<!--                                     <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div> -->
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                            <!-- <div class="carousel-item">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="#">
-                                            <img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
- -->
-                        </div>
-                        <!--.carousel-inner-->
-                    </div>
-                    <!--.Carousel-->
-
-                </div>
-            </div>
+    </div>
+  </div>
 </div>
-
+</div>
 </template>
 
 <script>
@@ -134,10 +81,18 @@
 			let uri = this.$store.getters.getUri
       let router = this.$store.getters.getRoutes
 
+      this.loaderBrand = true
+
 			axios.get(`${uri}/${router.brand}`)
 			.then(response => {
+
+          this.loaderBrand = false
 					this.brands = response.data
+
 			})
+      .catch(error => {
+          this.loaderBrand = false
+      })
 		}
   }
 
