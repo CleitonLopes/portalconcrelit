@@ -106,121 +106,13 @@
       </div>
     </header>
 
-    <!-- Carrossel com Logos -->
     <c-brand />
 
-    <!-- Como Funciona -->
-    <section id="como-funciona" class="container como-funciona">
-      <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-          <h2 class="titulo">COMO FUNCIONA?</h2>
-        </div>
+    <c-how-it-works />
 
-        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-          <i class="fa fa-map-marker fa-3x" aria-hidden="true"></i>
-          <div class="sub-titulo">Localização</div>
-          <p>Insira o cep ou endereço de sua obra. Assim, iremos verificar as concreteiras mais próximas.</p>
-          <p></p>
-        </div>
+    <c-deposition />
 
-        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-          <i class="fa fa-pencil-square fa-3x" aria-hidden="true"></i>
-          <div class="sub-titulo">Solicite</div>
-          <p>Conte-nos qual tipo de concreto e resitência que você precisa e solicite orçamentos.</p>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-          <i class="fa fa-mouse-pointer fa-3x" aria-hidden="true"></i>
-          <div class="sub-titulo">Escolha</div>
-          <p>Receba e avalie e compare os orçamentos que melhor se adequem a sua necessidade.</p>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center">
-          <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
-          <div class="sub-titulo">Compre</div>
-          <p>Realize a compra e negocie direto com o fornecedor que você optou.</p>
-        </div>
-      </div>
-    </section>
-    <!-- Fim Bloco como funciona -->
-
-    <!-- Depoimentos -->
-    <section id="depoimentos" class="container-fluid depoimentos">
-      <div class="container">
-        <div v-if="loaderDeposition" class="row">
-          <div class="col-12 text-center mt-4">
-            <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-          </div>
-        </div>
-
-
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-            <h2 class="titulo">DEPOIMENTOS</h2>
-          </div>
-          <div v-for="(deposition, index) in depositions" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <div class="card text-white bg-primary mb-3 text-center box-card">
-              <div class="card-header">
-                <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
-                <span>{{ deposition.title }}</span>
-              </div>
-              <div class="card-body text-left">
-                <div class="card-title">
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                  <i class="fa fa-star fa-lg" aria-hidden="true"></i>
-                </div>
-                <p class="card-text">
-                {{ deposition.description }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Fim Bloco Depoimentos -->
-
-    <!-- Ultimos Posts -->
-    <section id="blog" class="container">
-      <no-ssr>
-        <div v-if="loaderBlog" class="row">
-          <div class="col-12 text-center mt-4">
-            <img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-          </div>
-        </div>
-
-        <div v-else class="row">
-
-          <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-            <h2 class="titulo">BLOG</h2>
-          </div>
-          <div v-for="post in posts" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
-            <div class="card">
-              <img class="card-img-top" :src="post.path_image" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">{{ post.title }}</h5>
-                <p class="card-text"
-                  v-html="post.description.substr(0, 250).concat('...')">
-                </p>
-                <p class="card-text">
-                  <small class="text-muted">
-                    Criado em {{ post.date }}
-                  </small>
-                </p>
-                <nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
-                  class="btn btn-primary">
-                  Continuar
-                </nuxt-link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </no-ssr>
-    </section>
-    <!-- Fim Bloco Posts -->
+    <c-latest-post />
 
     <!-- Na Midia -->
     <section id="na-midia" class="container-fluid na-midia">
@@ -266,7 +158,10 @@
 import axios from 'axios';
 import CNewsletter from '~/components/Newsletter'
 import CFooter from '~/components/Footer.vue'
-import CBrand from '~/components/Brand.vue'
+import CBrand from '~/components/Home/Brand.vue'
+import CHowItWorks from '~/components/Home/HowItWorks.vue'
+import CDeposition from '~/components/Home/Deposition.vue'
+import CLatestPost from '~/components/Home/LatestPost.vue'
 
 export default {
 
@@ -275,15 +170,16 @@ export default {
   components: {
     CNewsletter,
     CFooter,
-    CBrand
+    CBrand,
+    CHowItWorks,
+    CDeposition,
+    CLatestPost
   },
 
   data() {
     return {
       title: 'Home',
       zipCode: null,
-      posts: null,
-      depositions: null,
       searchSelected: "zipCode",
       stateSelected: 1000,
       dataAddress: {
@@ -296,22 +192,10 @@ export default {
       responseDataAddress: [],
       jsonState: [],
       jsonCities: [],
-      loaderBlog: false,
-      loaderDeposition: false,
       uri: null,
       router: null
     };
   },
-
-  // head () {
-  //   return {
-  //     title: this.title,
-  //     meta: [
-
-  //       // { hid: 'description', name: 'google-site-verification', content: "qLHlnawy_EkPlETzJYROs-4d8U9ZVJN9HoCMP8XJbJ8" }
-  //     ]
-  //   }
-  // },
 
   computed: {
 
@@ -386,14 +270,16 @@ export default {
     return Promise.all([
 
       app.$axios.$get(`${app.uri}/${app.router.lastPost}`),
-      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`)
+      app.$axios.$get(`${app.uri}/${app.router.lastDeposition}`),
+      app.$axios.$get(`${app.uri}/${app.router.brand}`)
 
     ])
     .then(results => {
-      return {
-        posts: results[0],
-        depositions: results[1]
-      }
+
+      app.store.dispatch('setLatestPost', results[0])
+      app.store.dispatch('setDepositions', results[1])
+      app.store.dispatch('setBrands', results[2])
+
     })
   },
 
@@ -734,63 +620,6 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 /* Fim Header */
-
-
-/* COMO FUNCIONA */
-.como-funciona i {
-  margin-bottom: 20px;
-  color: #ff6501;
-
-}
-
-.como-funciona .sub-titulo {
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 22px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.como-funciona p {
-  font-size: 16px;
-  text-align: center;
-  color: #333;
-  margin-left: 30px;
-
-}
-
-.depoimentos {
-  margin-top: 40px;
-  background-color: #f5f5f5;
-  padding-bottom: 40px;
-
-}
-
-.depoimentos i {
-  margin-right: 5px;
-}
-
-.depoimentos .card-title i{
-    color: #fffc01;
-}
-
-.depoimentos span {
-  font-size: 22px;
-}
-
-.depoimentos p {
-  font-size: 14px;
-  text-align: justify;
-}
-
-.box-card {
-  height: 100%;
-}
-
-.blog h5 {
-  font-size: 22px;
-  color: #333;
-}
 
 .na-midia {
   margin-top: 50px;

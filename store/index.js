@@ -7,38 +7,43 @@ const createStore = () => {
         actions: {
 
             setZipCode(store, payload) {
-
                 return store.commit('setZipCode', payload)
             },
 
             setDataAddress(store, payload) {
-
                 return store.commit('setDataAddress', payload)
             },
 
             setToken(store, payload) {
-
                 return store.commit('setToken', payload)
             },
 
             setStorage(store, payload) {
-
                 return store.commit('setStorage', payload)
             },
 
             setJsonState(store, payload) {
-
                 return store.commit('setJsonState', payload)
             },
 
             setJsonCities(store, payload) {
-
                 return store.commit('setJsonCities', payload)
             },
 
             setPlanSelected(store, payload) {
-
                 return store.commit('setPlanSelected', payload)
+            },
+
+            setBrands(store, payload) {
+                return store.commit('setBrands', payload)
+            },
+
+            setDepositions(store, payload) {
+                return store.commit('setDepositions', payload) 
+            },
+
+            setLatestPost(store, payload) {
+                return store.commit('setLatestPost', payload)
             }
 
         },
@@ -46,39 +51,44 @@ const createStore = () => {
         mutations: {
 
             setZipCode(state, payload) {
-
                 state.zipCode = payload
             },
 
             setDataAddress(state, payload) {
-
                 state.dataAddress = payload
             },
 
             setToken(state, payload) {
-
                 state.token = payload
             },
 
             setStorage(state, payload) {
-
                 state.storage = payload
             },
 
             setJsonState(state, payload) {
-
                 state.states = payload
             },
 
             setJsonCities(state, payload) {
-
                 state.cities = payload
             },
 
             setPlanSelected(state, payload) {
-
                 state.planSelected = payload
-            }
+            },
+
+            setBrands(state, payload) {
+                state.brands = payload
+            },
+
+            setDepositions(state, payload) {
+                state.depositions = payload
+            },
+
+            setLatestPost(state, payload) {
+                state.latestPost = payload
+            },
 
         },
 
@@ -126,6 +136,12 @@ const createStore = () => {
             // Array de cidades Brasileiras https://github.com/felipefdl/cidades-estados-brasil-json
             cities: null,
 
+            brands: [],
+
+            depositions: [],
+
+            latestPost: [],
+
             token: null
 
         },
@@ -170,6 +186,18 @@ const createStore = () => {
 
             getPlanSelected: state => {
                 return state.planSelected
+            },
+
+            getBrand: state => {
+                return state.brands
+            },
+
+            getDepositions: state => {
+                return state.depositions
+            },
+
+            getLatestPost: state => {
+                return state.latestPost
             }
 
         }
