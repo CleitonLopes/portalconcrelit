@@ -38,10 +38,14 @@ export default {
 
 <style scoped>
 
+.titulo {
+    margin-top: 10px;
+}
+
 .na-midia {
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: #f5f5f5;
-  padding: 0px 0 50px 0;
+  padding: 0 0 20px 0;
 }
 </style>
 
