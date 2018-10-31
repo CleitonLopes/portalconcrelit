@@ -2,41 +2,51 @@
 	<section>
 		<div id="blog" class="container blog">
 
-			<div v-if="data" class="row">
+			<div class="row">
 
-				<div class="col-12">
+				<div class="col-12 col-sm-8 col-md-8">
+					
 					<h2 class="titulo">Blog</h2>
+
+					<div v-for="post in data.data" :key="post.id">
+
+						<h5 class="text-left">{{ post.title }}</h5>
+			
+						<img :src="post.path_image" style="width: 100%;" alt="" />				
+					
+						<div class="mt-4"
+							v-html="post.description.substr(0, 600)
+							.concat('...')">						
+						</div>
+					
+						<nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }">
+							continue lendo
+						</nuxt-link>			
+					
+					</div>
+					
 				</div>
 
-				<div v-if="loader" class="row">
-					<div class="col-12 text-center mt-4">
-						<img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-					</div>
-				</div>
+				<div class="col-12 col-sm-4 col-md-4">
 
-				<div v-for="post in data.data" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					<h2 class="titulo">Rede Social</h2>
+					<h5>Curta nossa Fan Page</h5>
+					
+					<c-facebook-plugin />
 
-					<h5 class="text-center">{{ post.title }}</h5>
-
-					<div class="text-center">
-						<img :src="post.path_image" class="img-fluid" alt="" />
-					</div>
-
-					<div class="mt-4"
-						v-html="post.description.substr(0, 600).concat('...')">
+					<h5>Tags</h5>
+					<div v-for="post in data.data" :key="post.id">
+						<nuxt-link class="btn btn-secondary mt-1 mb-1 ml-1 mr-1" :to="{ name: 'noticias-id', params: { id:post.tag } }">
+							{{ post.tag }}
+						</nuxt-link>
 					</div>
 
-					<nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
-						class="btn btn-primary">
-						Continuar
-					</nuxt-link>
-
-				</div>
+				</div>	
 			</div>
 
 			<div class="row mt-4">
 
-				<div class="col-12">
+				<div class="col-12 col-sm-4 col-md-4">
 					<button v-if="data.prev_page_url" type="button" class="btn btn-secondary mb-2"
 						@click="getNextOrPrev(data.prev_page_url)">
 						<i class="fa fa-angle-double-left" aria-hidden="true"></i>
@@ -54,21 +64,23 @@
 		</div>
 
 		<c-newsletter />
-   	<c-footer />
+   		<c-footer />
 	</section>
 </template>
 
 <script>
 
 import axios from 'axios'
+import CFacebookPlugin from '~/components/FacebookPlugin.vue'
 import CNewsletter from '~/components/Newsletter'
-import CFooter from '~/components/Footer.vue'
+import CFooter from '~/components/Footer'
 
 export default {
 
     name: 'CNoticias',
 
   	components: {
+		CFacebookPlugin,
 	    CNewsletter,
 	    CFooter
   	},
@@ -116,7 +128,7 @@ export default {
             })
 
         }
-    },
+	}
 }
 </script>
 
@@ -125,7 +137,7 @@ export default {
 .blog .titulo {
 	margin: 140px 0 40px 0;
 	color: #ff6501;
-	font-size: 50px;
+	font-size: 40px;
 }
 
 .blog p {
@@ -136,6 +148,7 @@ export default {
 
 .blog h5 {
 	margin-bottom: 20px;
+	text-align: left;
 }
 
 </style>

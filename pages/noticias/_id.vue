@@ -4,34 +4,35 @@
 
 			<div class="row">
 
-				<div class="col-12">
-					<h2 class="titulo">Blog</h2>
-				</div>
+				<div class="col-12 col-sm-8 col-md-8">
 
-				<div v-if="loader" class="row">
-					<div class="col-12 text-center mt-4">
-						<img id="loader" src="~assets/images/loader.gif" alt="loader pagina">
-					</div>
-				</div>
-
-				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					<div class="col-12">
+						<h2 class="titulo">Blog</h2>
+					</div>			
 
 					<h5 class="text-center">{{ post.title }}</h5>
 
 					<div class="text-center">
-						<img :src="post.path_image" class="img-fluid" alt="" />
+						<img :src="post.path_image" style="width: 100%;" alt="" />
 					</div>
 
-					<div class="mt-4"
-						v-html="post.description">
-					</div>
-
-					<nuxt-link to="/noticias"
-						class="btn btn-primary">
-						voltar
-					</nuxt-link>
-
+					<div class="mt-4" v-html="post.description"></div>
+				
 				</div>
+
+				<div class="col-12 col-sm-4 col-md-4">
+
+					<h2 class="titulo">Rede Social</h2>
+					<h5>Curta nossa Fan Page</h5>
+
+					<c-facebook-plugin />
+
+				</div>	
+
+				<nuxt-link to="/noticias" class="btn btn-primary">
+					voltar
+				</nuxt-link>
+
 			</div>
 
 		</div>
@@ -45,6 +46,7 @@
 <script>
 
 import axios from 'axios'
+import CFacebookPlugin from '~/components/FacebookPlugin.vue'
 import CNewsletter from '~/components/Newsletter'
 import CFooter from '~/components/Footer.vue'
 
@@ -54,6 +56,7 @@ export default {
     name: 'CPost',
 
   	components: {
+		CFacebookPlugin,
 	    CNewsletter,
 	    CFooter
   	},
@@ -109,7 +112,7 @@ export default {
 .blog .titulo {
 	margin: 140px 0 40px 0;
 	color: #ff6501;
-	font-size: 50px;
+	font-size: 40px;
 }
 
 .blog p {
@@ -120,6 +123,7 @@ export default {
 
 .blog h5 {
 	margin-bottom: 20px;
+	text-align: left;
 }
 
 </style>

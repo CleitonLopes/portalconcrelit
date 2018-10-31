@@ -15,7 +15,7 @@
                                 <div class="col-12 col-md-2" v-for="brand in getBrands" :key="brand.id">
                                     <a :href="brand.redirect" :title="brand.name"
                                         class="thumb" target="_blank">
-                                        <img style="max-width:100px; height: 100px;"
+                                        <img style="max-width:100px; height:100px;"
                                         :src="brand.path_image" :alt="brand.alt">
                                     </a>
                                 </div>
@@ -46,15 +46,15 @@ import axios from 'axios'
 
 export default {
 
-	name: 'CBrand',
+    name: 'CBrand',
 
-  computed: {
+    computed: {
 
-    getBrands () {
-      return this.$store.getters.getBrand
+        getBrands () {
+            return this.$store.getters.getBrand
+        }
+
     }
-
-  }
 }
 
 </script>

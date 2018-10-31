@@ -45,8 +45,8 @@
                         <p>(11) 99999 9999</p>
                         <p class="mt-4">Fique conectado!</p>
                         <a href=""><img src="~assets/images/facebook.png" alt="Redes Sociais Facebook" class="cards"></a>
-                        <a href=""><img src="~assets/images/linkedin.png" alt="Redes Sociais Linkedin" class="cards"></a>
-                        <a href=""><img src="~assets/images/googleplus.png" alt="Redes Sociais Google Plus" class="cards"></a>
+                        <a href="https://www.linkedin.com/company/concretousinado/" target="_blank"><img src="~assets/images/linkedin.png" alt="Redes Sociais Linkedin" class="cards"></a>
+                        <a href="https://www.facebook.com/portalconcretousinado/" target="_blank"><img src="~assets/images/googleplus.png" alt="Redes Sociais Google Plus" class="cards"></a>
                     </div>
 
                 </div>

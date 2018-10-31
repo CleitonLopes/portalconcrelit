@@ -35,7 +35,7 @@
                 </div>
             </div>
             
-            <div v-if="responseDataAddress.length > 1" class="table-wrapper-scroll-y">
+            <div v-if="responseDataAddress.length > 1" class="table-responsive">
               <table class="table table-hover table-light">
                 <thead class="table-secondary">
                   <tr>
@@ -295,8 +295,10 @@ export default {
     display: block;
     max-height: 250px;
     overflow-y: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+table {
+    border:1px solid;
+}
 </style>
 

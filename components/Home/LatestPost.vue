@@ -1,29 +1,28 @@
 <template>
     <section v-if="getLatestPost.length > 0" class="container">
-        <div class="row">
+        <div class="row d-flex align-items-stretch">
             <div class="col-12 col-sm-12 col-md-12 col-xl-12">
                 <h2 class="titulo">BLOG</h2>
             </div>
             <div v-for="post in getLatestPost" :key="post.id" class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
                 <div class="card">
-                    <img class="card-img-top" :src="post.path_image" alt="Card image cap">
+                    <img style="height: 100%;" class="card-img-top" :src="post.path_image" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                            <no-ssr>
+                        <div class="block-title">
+                            <h5 class="card-title mt-2 mb-2">{{ post.title }}</h5>
+                        </div>
+                        <no-ssr>        
                             <p class="card-text"
                                 v-html="post.description.substr(0, 250).concat('...')">
-                            </p>
-                            </no-ssr>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                Criado em {{ post.date }}
-                            </small>
-                        </p>
+                            </p>                        
+                        </no-ssr>
                         
-                        <nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
-                            class="btn btn-primary">
-                            Continuar
-                        </nuxt-link>
+                        <div class="text-right">
+                            <nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
+                                class="btn btn-primary">
+                                Continuar
+                            </nuxt-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,6 +49,15 @@ export default {
 .blog h5 {
   font-size: 22px;
   color: #333;
+}
+
+.block-title {
+    height: 100px
+}
+
+.card-text {
+    text-align: justify;
+    letter-spacing: -1px;
 }
 
 </style>

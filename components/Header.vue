@@ -1,18 +1,4 @@
-<script>
-export default {
-
-    name: 'CHeader',
-    data () {
-        return {
-
-        }
-    }
-}
-</script>
-
-
 <template>
-
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
 
         <nuxt-link to="/" class="navbar-brand">
@@ -49,14 +35,25 @@ export default {
 
         </div>
     </nav>
-
 </template>
+
+<script>
+export default {
+
+    name: 'CHeader',
+    data () {
+        return {
+
+        }
+    }
+}
+</script>
 
 <style scoped>
 
-/*.navbar {
-  padding: 1rem 4rem;
-}*/
+.navbar {
+  padding: 1rem 1.2rem;
+}
 
 .navbar-nav{
   margin-right: 50px;

@@ -164,9 +164,4 @@ header button { margin-top: 30px; }
   text-align: center;
 }
 
-.na-midia {
-  margin-top: 50px;
-  background-color: #f5f5f5;
-  padding: 20px 0 100px 0;
-}
 </style>

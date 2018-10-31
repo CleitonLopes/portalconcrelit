@@ -38,7 +38,11 @@ export default {
 
 <style scoped>
 
-
+.na-midia {
+  margin-top: 50px;
+  background-color: #f5f5f5;
+  padding: 0px 0 50px 0;
+}
 </style>
 
 
