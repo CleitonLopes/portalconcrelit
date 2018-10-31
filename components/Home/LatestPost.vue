@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section v-if="getLatestPost.length > 0" class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-xl-12">
                 <h2 class="titulo">BLOG</h2>
@@ -9,14 +9,17 @@
                     <img class="card-img-top" :src="post.path_image" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
+                            <no-ssr>
                             <p class="card-text"
                                 v-html="post.description.substr(0, 250).concat('...')">
                             </p>
+                            </no-ssr>
                         <p class="card-text">
                             <small class="text-muted">
                                 Criado em {{ post.date }}
                             </small>
                         </p>
+                        
                         <nuxt-link :to="{ name: 'noticias-id', params: { id:post.tag } }"
                             class="btn btn-primary">
                             Continuar

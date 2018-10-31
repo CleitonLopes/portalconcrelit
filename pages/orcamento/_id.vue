@@ -68,7 +68,7 @@
 
                         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     						<select v-model="data.resistenceConcreteSelected" class="form-control">
-    							<option v-for="item in dataConcreteRes" :value="item.value">
+    							<option v-for="item in dataConcreteRes" :key="item.value" :value="item.value">
     								{{ item.description }}
     							</option>
     						</select>
@@ -76,13 +76,11 @@
 
                         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
     						<select v-model="data.pieceConcreteSelected" class="form-control">
-    							<option v-for="item in dataPieceConcrete" :value="item.value">
+    							<option v-for="item in dataPieceConcrete" :key="item.value" :value="item.value">
     								{{ item.description }}
     							</option>
     						</select>
     					</div>
-
-
 
                         <div class="col-12">
                             <p class="text-left">E a quantidade necessária?</p>
@@ -345,30 +343,33 @@ export default {
             if (zipCode != null || zipCode != undefined) {
 
                 let zipCodeReplace = zipCode.replace(/\D/g,"")
+                this.setMaskZipCode(zipCodeReplace)
 
-                // Adiciona caraters 17.512-060
-                zipCodeReplace = zipCode.replace(/\D/g,"")
-                zipCodeReplace = zipCodeReplace.replace(/^(\d{2})(\d)/,"$1.$2")
-                zipCodeReplace = zipCodeReplace.replace(/(\d{3})(\d)/,"$1-$2")
-
-                this.data.zipCode = zipCodeReplace
                 filter = `components=country:BRA|postal_code:${zipCode}`
                 return filter
-
             }
 
             if (dataAddress != null || dataAddress != undefined) {
 
-                this.data.zipCode = dataAddress.zipCode
+                let zipCodeReplace = dataAddress.zipCode
+                this.setMaskZipCode(zipCodeReplace)
 
                 filter = `address=${dataAddress.street},${dataAddress.number},+${dataAddress.citySelected},
                     ${dataAddress.stateSelected}&components=country:BR`
+                
                 return filter
-
             }
 
             return filter
+        },
 
+        setMaskZipCode (value) {
+
+            let zipCodeReplace = value
+            zipCodeReplace = zipCodeReplace.replace(/\D/g,"")
+            zipCodeReplace = zipCodeReplace.replace(/^(\d{2})(\d)/,"$1.$2")
+            zipCodeReplace = zipCodeReplace.replace(/(\d{3})(\d)/,"$1-$2")
+            this.data.zipCode = zipCodeReplace
         },
 
         alterZipCode () {
@@ -503,10 +504,8 @@ export default {
         },
     },
 
-    mounted () {
-
+    mounted () {        
         this.searchCoordinates()
-
     }
 
 }
@@ -514,25 +513,13 @@ export default {
 
 <style scoped>
 
-.pedido {
-    margin-top: 100px;
-}
+.pedido { margin-top: 100px; }
 
-.pedido .titulo {
-  color: #ff6501;
-  font-size: 50px;
-}
+.pedido .titulo { color: #ff6501; font-size: 50px; }
 
-.pedido p {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
+.pedido p { font-size: 18px; font-weight: bold; text-align: center; }
 
-#map-order {
-height: 500px;
-width: 100%;
-  }
+#map-order { height: 500px; width: 100%; }
 
 </style>
 

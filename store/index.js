@@ -6,6 +6,10 @@ const createStore = () => {
 
         actions: {
 
+            setTypeSearchAddress(store, payload) {
+                return store.commit('setTypeSearchAddress', payload)
+            },
+
             setZipCode(store, payload) {
                 return store.commit('setZipCode', payload)
             },
@@ -49,6 +53,10 @@ const createStore = () => {
         },
 
         mutations: {
+
+            setTypeSearchAddress(state, payload) {
+                state.typeSearchAddress = payload
+            },
 
             setZipCode(state, payload) {
                 state.zipCode = payload
@@ -94,8 +102,8 @@ const createStore = () => {
 
         state: {
 
+            typeSearchAddress: 'zipCode', 
             zipCode: null,
-
             dataAddress: null,
 
             // uri:'http://concretousinadoapi.com.br/api',
@@ -147,6 +155,10 @@ const createStore = () => {
         },
 
         getters: {
+
+            getTypeSearchAddress: state => {
+                return state.typeSearchAddress
+            },
 
             getZipCode: state => {
                 return state.zipCode
