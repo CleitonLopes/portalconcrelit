@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="mt-60">
 		<div id="blog" class="container blog">
 
 			<div class="row">
@@ -29,19 +29,20 @@
 
 				<div class="col-12 col-sm-4 col-md-4">
 
-					<h2 class="titulo">Rede Social</h2>
-					<h5>Curta nossa Fan Page</h5>
-					
-					<c-facebook-plugin />
-
-					<h5>Tags</h5>
-					<div v-for="post in data.data" :key="post.id">
-						<nuxt-link class="btn btn-secondary mt-1 mb-1 ml-1 mr-1" :to="{ name: 'noticias-id', params: { id:post.tag } }">
-							{{ post.tag }}
-						</nuxt-link>
+					<div>
+						<img id="loader-facebook" src="~assets/images/loader.gif" alt="loader pagina">
 					</div>
-
-				</div>	
+					
+					<div id="loaded-plugin-facebook" style="display: none;">
+						<c-facebook-plugin />
+						<h5>Tags</h5>
+						<div v-for="post in data.data" :key="post.id">
+							<nuxt-link class="btn btn-secondary mt-1 mb-1 ml-1 mr-1" :to="{ name: 'noticias-id', params: { id:post.tag } }">
+								{{ post.tag }}
+							</nuxt-link>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div class="row mt-4">
@@ -135,9 +136,9 @@ export default {
 <style scoped>
 
 .blog .titulo {
-	margin: 140px 0 40px 0;
 	color: #ff6501;
 	font-size: 40px;
+	text-align: left;
 }
 
 .blog p {
@@ -149,6 +150,15 @@ export default {
 .blog h5 {
 	margin-bottom: 20px;
 	text-align: left;
+}
+
+#loader-facebook {
+	top: 10%;
+	left: 45%;
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	z-index: 2
 }
 
 </style>

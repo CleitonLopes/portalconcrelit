@@ -1,5 +1,5 @@
 <template>
-	<section v-if="post != ''" id="blog">
+	<section v-if="post != ''" id="blog" class="mt-60">
 		<div class="container blog">
 
 			<div class="row">
@@ -22,10 +22,15 @@
 
 				<div class="col-12 col-sm-4 col-md-4">
 
-					<h2 class="titulo">Rede Social</h2>
-					<h5>Curta nossa Fan Page</h5>
+					<div>
+						<img id="loader-facebook" src="~assets/images/loader.gif" alt="loader pagina">
+					</div>
 
-					<c-facebook-plugin />
+					<div id="loaded-plugin-facebook" style="display: none;">
+
+						<c-facebook-plugin />
+						
+					</div>
 
 				</div>	
 
@@ -110,7 +115,6 @@ export default {
 <style scoped>
 
 .blog .titulo {
-	margin: 140px 0 40px 0;
 	color: #ff6501;
 	font-size: 40px;
 }
@@ -124,6 +128,15 @@ export default {
 .blog h5 {
 	margin-bottom: 20px;
 	text-align: left;
+}
+
+#loader-facebook {
+	top: 10%;
+	left: 45%;
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	z-index: 2
 }
 
 </style>
