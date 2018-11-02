@@ -27,16 +27,16 @@
 					</div>
 
 					<div id="loaded-plugin-facebook" style="display: none;">
-
-						<c-facebook-plugin />
-						
+						<c-facebook-plugin />						
 					</div>
 
 				</div>	
-
-				<nuxt-link to="/noticias" class="btn btn-primary">
-					voltar
-				</nuxt-link>
+				
+				<div class="col-12 mt-4">
+					<nuxt-link to="/noticias" class="btn btn-primary">
+						voltar
+					</nuxt-link>
+				</div>
 
 			</div>
 
