@@ -2,5 +2,5 @@ RewriteEngine on
 RewriteBase /
 
 RewriteCond %{REQUEST_URI} !^/dist/
-RewriteCond %{HTTP_HOST} ^(www\.)?concretousinado.com.br\.
+RewriteCond %{HTTP_HOST} ^(www\.)?concretousinado\.
 RewriteRule ^(.*)$ /dist/$1 [L]
