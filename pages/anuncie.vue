@@ -1,5 +1,6 @@
 <template>
     <section id="anuncie">
+        
 		<div class="container anuncie">
 			<div class="row no-gutters">
 				<div class="col-12">
