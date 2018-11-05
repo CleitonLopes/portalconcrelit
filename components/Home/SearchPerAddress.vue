@@ -119,9 +119,9 @@ export default {
 
         loadJsonState() {
 
-            fetch('/json/estados.json')
+            axios.get('/json/estados.json')
 
-            .then(response => response.json())
+            .then(response => response.data)
             .then(data => {
 
                 this.jsonState = data
@@ -138,9 +138,9 @@ export default {
             this.jsonCities = []
             let filtered = []
 
-            fetch('/json/cidades.json')
+            axios.get('/json/cidades.json')
             
-            .then(response => response.json())
+            .then(response => response.data)
             .then(data => {
 
                 let i = 0;
