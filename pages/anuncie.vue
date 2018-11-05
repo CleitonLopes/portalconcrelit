@@ -1,6 +1,5 @@
 <template>
-    <section id="anuncie">
-        
+    <section id="anuncie">        
 		<div class="container anuncie">
 			<div class="row no-gutters">
 				<div class="col-12">
@@ -8,7 +7,7 @@
 					<p>Planos para divulgar sua Concreteira</p>
 				</div>
 
-				<div v-for="(plan, key) in data" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<div v-for="plan in data" :key="plan.id" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 					<div class="block" :class="{ elevated: plan.id == selectedPlan }">
 						<div class="header">
 							<h2>{{ plan.name }}</h2>
