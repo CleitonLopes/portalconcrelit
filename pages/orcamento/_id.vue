@@ -227,7 +227,6 @@ export default {
 
         preparePhone: {
 
-
             get() {
 
                 return this.data.phone
@@ -303,9 +302,11 @@ export default {
 
             let filter = null
 
+            console.log('trest')
+
             if (filter = this.getFilterGeocode()) {
 
-                axios.get(`${uri}${filter}&${keyGoogle}`)
+                axios.get(`${uri}${filter.route}&${keyGoogle}`)
 
                 .then((response) => {
 
@@ -315,6 +316,12 @@ export default {
 
                         this.data.origin = result
                         this.initMap(result.geometry.location)
+
+                        // if (filter.zipCode == true) {
+                        //     let paramRoute = `cep=${this.data.zipCode.replace(/\D/g,"")}`
+                        //     this.$router.push({ name: 'orcamento-id', params: { id: paramRoute }})
+                        // }
+
 
                     } else {
 
@@ -332,11 +339,12 @@ export default {
 
             let zipCode = this.$store.getters.getZipCode
             let dataAddress = this.$store.getters.getDataAddress
-            let filter = null;
+            let filter = {};
 
             if (this.data.zipCode != null || this.data.zipCode != undefined) {
                 zipCode = this.data.zipCode.replace(/\D/g,"")
-                filter = `components=country:BRA|postal_code:${zipCode}`
+                filter.route = `components=country:BRA|postal_code:${zipCode}`
+                filter.zipCode = true
                 return filter
             }
 
@@ -345,7 +353,8 @@ export default {
                 let zipCodeReplace = zipCode.replace(/\D/g,"")
                 this.setMaskZipCode(zipCodeReplace)
 
-                filter = `components=country:BRA|postal_code:${zipCode}`
+                filter.route = `components=country:BRA|postal_code:${zipCode}`
+                filter.zipCode = true
                 return filter
             }
 
@@ -354,9 +363,9 @@ export default {
                 let zipCodeReplace = dataAddress.zipCode
                 this.setMaskZipCode(zipCodeReplace)
 
-                filter = `address=${dataAddress.street},${dataAddress.number},+${dataAddress.citySelected},
+                filter.route = `address=${dataAddress.street},${dataAddress.number},+${dataAddress.citySelected},
                     ${dataAddress.stateSelected}&components=country:BR`
-                
+                filter.zipCode = false
                 return filter
             }
 
@@ -505,7 +514,9 @@ export default {
     },
 
     mounted () {        
-        this.searchCoordinates()
+        
+        return this.searchCoordinates()
+        
     }
 
 }

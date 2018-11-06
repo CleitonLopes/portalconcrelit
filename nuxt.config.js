@@ -38,7 +38,6 @@ module.exports = {
   // plugins: ['~/plugins/facebook.js'],
 
   build: {
-    // vendor: ['facebook'],
     extractCSS:true
   },
 
@@ -46,6 +45,17 @@ module.exports = {
     '@nuxtjs/axios'
   ],
 
-  axios: {}
+  axios: {},
+
+  router: {
+
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'notFound',
+        path: '*',
+        component: resolve(__dirname, 'pages/404.vue')
+      })
+    }
+  }
 }
 

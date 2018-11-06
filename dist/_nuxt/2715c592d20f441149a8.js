@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{236:function(n,t,e){"use strict";e.r(t);var u={mounted:function(){return this.$router.push("/")}},i=e(12),o=Object(i.a)(u,function(){var n=this.$createElement;return(this._self._c||n)("div")},[],!1,null,null,null);o.options.__file="404.vue";t.default=o.exports}}]);

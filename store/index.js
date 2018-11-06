@@ -107,7 +107,7 @@ const createStore = () => {
             dataAddress: null,
 
             // uri:'http://concretousinadoapi.com.br/api/public/api',
-            uri:'https://concretousinado.com.br/api/public/api',
+            uri:'https://concretousinado.com.br/api',
 
             uriViaCep: 'https://viacep.com.br/ws/',
             uriGeocode: 'https://maps.googleapis.com/maps/api/geocode/json?',

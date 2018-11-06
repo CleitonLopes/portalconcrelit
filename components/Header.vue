@@ -11,8 +11,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <nuxt-link to="/" class="nav-link">Inicio <span class="sr-only">(current)</span></nuxt-link>
+                
+            <li class="nav-item">
+                <nuxt-link to="/" class="nav-link" exact>Inicio 
+                    <span class="sr-only">(current)</span>
+                </nuxt-link>
             </li>
             <li class="nav-item">
                 <nuxt-link to="/sobre" class="nav-link">Sobre</nuxt-link>
@@ -63,6 +66,11 @@ export default {
   margin-left: 8px;
   margin-right: 8px;
 
+}
+
+.nuxt-link-active {
+    color: #ff6501 !important;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 768px){
